@@ -1,0 +1,7 @@
+*
+!Dockerfile
+!dashboard/
+!dashboard/**
+dashboard/**/*.sqlite3*
+dashboard/**/__pycache__/
+dashboard/tests/

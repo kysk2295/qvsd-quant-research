@@ -13,3 +13,12 @@ venv/
 !/data/incoming/.gitkeep
 *.ntd
 *.ncd
+# Local dashboard credentials, telemetry, and database
+.railway/
+.dashboard-secrets.json
+.dashboard-worker.json
+.dashboard-state.json
+*.sqlite3
+*.sqlite3-shm
+*.sqlite3-wal
+/data/telemetry/
