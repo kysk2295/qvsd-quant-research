@@ -1,0 +1,30 @@
+[
+  {
+    "symbol": "NQ",
+    "sha256": "c00865986078436e7b6f54c9fa468185ab4bbdeec4b9d6f2cbeb43a76f3d9133",
+    "raw_rows": 17279,
+    "null_rows": 3680,
+    "valid_rows": 13599,
+    "first_valid": "2026-08-14T00:05:00-04:00",
+    "last_valid": "2026-10-23T16:55:00-04:00",
+    "complete_sessions": 50,
+    "excluded_sessions": {},
+    "quote_name": "Nasdaq 100 Dec 26",
+    "source": "https://query1.finance.yahoo.com/v8/finance/chart/NQ%3DF?range=60d&interval=5m"
+  },
+  {
+    "symbol": "GC",
+    "sha256": "043bd93aa6818ea6e779fc5c02467f955d353dfd48b80866a055573ecb16460c",
+    "raw_rows": 17280,
+    "null_rows": 3640,
+    "valid_rows": 13640,
+    "first_valid": "2026-08-14T00:00:00-04:00",
+    "last_valid": "2026-10-23T16:55:00-04:00",
+    "complete_sessions": 49,
+    "excluded_sessions": {
+      "2026-10-16": 76
+    },
+    "quote_name": "Gold Dec 26",
+    "source": "https://query1.finance.yahoo.com/v8/finance/chart/GC%3DF?range=60d&interval=5m"
+  }
+]

@@ -1,0 +1,46 @@
+# QVSD Quant Research
+
+제2회 LIFEUPTRADING × GRINDING LIFE 대회 준비를 위한 전략 연구 저장소입니다.
+카페 아이디어 분석, 백테스트 코드, 데이터 출처, 거래 원장과 검증 결과를 함께 관리합니다.
+
+**현재 상태: 예비 검증 완료, 실전 투입 승인 전략 없음.**
+Windows NinjaTrader 원자료와 공식 대회 시간·비용으로 추가 검증해야 합니다.
+
+## 현재 자료
+
+- [분석 보고서](research/report.html): 다운로드하여 브라우저에서 열기
+- [백테스트](research/backtest.py) / [테스트](research/test_backtest.py)
+- [12개 조건의 결과](research/results.json)
+- [데이터 출처·해시·누락 검사](research/data_audit.json)
+- [Windows 인계 및 데이터 관리](docs/windows-handoff.md)
+- [연구 기록](docs/research-log.md)
+
+2026-10-24 기준 Yahoo NQ=F·GC=F 공개 5분봉의 2026-08-14~10-23 구간을 사용했습니다.
+미니 가격에 마이크로 계약가치를 적용한 대리 검증이며, 실제 마이크로 체결이나 대회 제출용 6개월 검증이 아닙니다.
+본문 텍스트를 확인한 카페 글은 45건이며 첨부 자료 전체를 검토한 상태는 아닙니다.
+
+## 실행
+
+Python 3.10 이상, 외부 Python 패키지는 필요하지 않습니다.
+Windows에서 IANA 시간대 데이터가 없으면 `py -m pip install tzdata`를 먼저 실행합니다.
+
+```sh
+python research/backtest.py
+python -m unittest discover -s research -p 'test_*.py' -v
+python research/build_report.py
+```
+
+명령은 저장된 원시 JSON을 읽습니다. 시세를 새로 다운로드하거나 주문하지 않습니다.
+`robustness.json`은 초기 탐색에서 별도로 계산한 결과 스냅샷이며 위 명령으로 재생성되지 않습니다.
+
+## 형상관리
+
+- `main`: 확인한 연구 기준 버전.
+- `codex/<주제>`: 전략 변경과 검증 작업 브랜치.
+- 전략 변경 커밋에는 가설, 사용 데이터, 실행 조건, 결과와 한계를 함께 기록합니다.
+- 원자료를 바꾸면 출처·월물·시간대·기간·SHA-256을 남깁니다.
+- 유리한 결과만 남기지 않고 실패한 후보와 비용 가정도 보존합니다.
+- 계좌 정보·비밀번호·API 키는 커밋하지 않습니다.
+- 대용량 NinjaTrader 원본은 `data/incoming/`에 두며 Git에서 제외합니다. 공유 방식이 정해지면 데이터 매니페스트로 연결합니다.
+
+이 저장소는 연구용이며 실거래 주문 시스템은 포함하지 않습니다.

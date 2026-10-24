@@ -1,0 +1,35 @@
+[
+  {
+    "symbol": "NQ",
+    "strategy": "failed_ib",
+    "max_winner": 1652.0,
+    "without_best_three": 2514.0,
+    "daily_iid_bootstrap_total_95": [
+      -272.5,
+      15071.0
+    ],
+    "entries_1000_1200": 38
+  },
+  {
+    "symbol": "NQ",
+    "strategy": "breakout",
+    "max_winner": 559.5,
+    "without_best_three": -4096.5,
+    "daily_iid_bootstrap_total_95": [
+      -7819.0,
+      2894.0
+    ],
+    "entries_1000_1200": 47
+  },
+  {
+    "symbol": "GC",
+    "strategy": "retest",
+    "max_winner": 502.5,
+    "without_best_three": -505.9999999987758,
+    "daily_iid_bootstrap_total_95": [
+      -4308.499999998949,
+      6066.500000000578
+    ],
+    "entries_1000_1200": 33
+  }
+]
