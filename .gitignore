@@ -14,7 +14,8 @@ venv/
 *.ntd
 *.ncd
 # Local dashboard credentials, telemetry, and database
-.railway/
+.railway/*
+!.railway/railway.ts
 .dashboard-secrets.json
 .dashboard-worker.json
 .dashboard-state.json
@@ -22,3 +23,4 @@ venv/
 *.sqlite3-shm
 *.sqlite3-wal
 /data/telemetry/
+node_modules/

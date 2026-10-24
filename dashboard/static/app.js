@@ -8,7 +8,7 @@ const ago=t=>{if(!Number.isFinite(t))return '—';let s=Math.max(0,Math.floor(Da
 const clock=t=>new Date(t*1000).toLocaleTimeString('ko-KR',{hour12:false});
 function workerOnline(r){return state.workers.some(w=>w.id===r.worker&&w.online)}
 function effective(r){return r.status==='running'&&!workerOnline(r)?'stale':r.status}
-function badge(r){let s=effective(r);return `<span class="badge ${s}">${s==='stale'?'응답 없음':labels[s]||esc(s)}</span>`+(s==='running'?`<div class="progress"><div style="width:${Number(r.progress)||0}%"></div></div>`:'')}
+function badge(r){let s=effective(r);return `<span class="badge ${s}">${s==='stale'?'응답 없음':labels[s]||esc(s)}</span>`+(s==='running'?`<progress class="progress" value="${Number(r.progress)||0}" max="100" aria-label="실험 진행률"></progress>`:'')}
 function filtered(){let q=$('search').value.toLowerCase(),s=$('symbol').value;let rows=state.runs.filter(r=>(filter==='all'||r.status===filter)&&(!s||r.symbol===s)&&JSON.stringify([r.strategy,r.dataset,r.source,names[r.strategy]]).toLowerCase().includes(q));let sort=$('sort').value;return rows.sort((a,b)=>sort==='net'?(b.metrics?.net??-Infinity)-(a.metrics?.net??-Infinity):sort==='dd'?(a.metrics?.closed_trade_mdd??Infinity)-(b.metrics?.closed_trade_mdd??Infinity):b.updated_at-a.updated_at)}
 function render(){
  $('total').textContent=state.runs.length;$('running').textContent=state.runs.filter(r=>r.status==='running'&&workerOnline(r)).length;$('completed').textContent=state.runs.filter(r=>r.status==='completed').length;$('failed').textContent=state.runs.filter(r=>['failed','rejected'].includes(r.status)).length;

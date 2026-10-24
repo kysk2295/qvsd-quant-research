@@ -10,6 +10,7 @@ import time
 from http.cookies import SimpleCookie
 from pathlib import Path
 from urllib.parse import parse_qs
+from contextlib import contextmanager
 
 BASE = Path(__file__).resolve().parent
 DB = Path(os.environ.get('DASHBOARD_DB', BASE / 'local.sqlite3'))
@@ -19,12 +20,17 @@ PAIR = os.environ.get('PAIRING_CODE', '')
 SECURE = os.environ.get('COOKIE_SECURE', '1') == '1'
 STATUSES = {'queued', 'running', 'completed', 'failed', 'rejected', 'blocked'}
 
+@contextmanager
 def connect():
     DB.parent.mkdir(parents=True, exist_ok=True)
     c = sqlite3.connect(DB, timeout=20)
     c.row_factory = sqlite3.Row
     c.execute('PRAGMA journal_mode=WAL')
-    return c
+    try:
+        with c:
+            yield c
+    finally:
+        c.close()
 
 def init():
     with connect() as c:
@@ -39,7 +45,7 @@ def init():
         if not c.execute('SELECT 1 FROM runs LIMIT 1').fetchone():
             seed = BASE / 'baseline.json'
             if seed.exists():
-                for r in json.loads(seed.read_text()):
+                for r in json.loads(seed.read_text(encoding='utf-8')):
                     c.execute('INSERT INTO runs VALUES(?,?,?)', (r['id'], json.dumps(r), r['updated_at']))
 
 def digest(v): return hashlib.sha256(v.encode()).hexdigest()
@@ -95,7 +101,7 @@ def validate_run(r):
 
 def application(env, start_response):
     path, method = env.get('PATH_INFO', '/'), env['REQUEST_METHOD']
-    headers = [('Cache-Control','no-store'),('X-Content-Type-Options','nosniff'),('Referrer-Policy','no-referrer'),('X-Frame-Options','DENY'),('Content-Security-Policy', "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self'; frame-ancestors 'none'")]
+    headers = [('Cache-Control','no-store'),('X-Content-Type-Options','nosniff'),('Referrer-Policy','same-origin'),('X-Frame-Options','DENY'),('Content-Security-Policy', "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self'; form-action 'self'; frame-ancestors 'none'")]
     def response(code, value, mime='application/json', extra=()):
         data = json.dumps(value, ensure_ascii=False, allow_nan=False).encode() if mime == 'application/json' else value.encode() if isinstance(value, str) else value
         start_response(code, headers + [('Content-Type', mime), ('Content-Length', str(len(data)))] + list(extra))
@@ -111,7 +117,9 @@ def application(env, start_response):
             raw = env['wsgi.input'].read(size)
             # Same-origin browser writes. Native reporters don't send an Origin header.
             origin = env.get('HTTP_ORIGIN')
-            if origin and origin != ('https' if SECURE else 'http') + '://' + env.get('HTTP_HOST',''):
+            expected_origin = os.environ.get('PUBLIC_ORIGIN') or ('https' if SECURE else 'http') + '://' + env.get('HTTP_HOST','')
+            if origin and origin != expected_origin:
+                print('Rejected origin', repr(origin), 'expected', repr(expected_origin), flush=True)
                 return response('403 Forbidden', {'error':'Origin rejected'})
             if path == '/login':
                 if not limit('login:' + env.get('REMOTE_ADDR', '')): return response('429 Too Many Requests', {'error':'잠시 후 다시 시도해주세요.'})

@@ -47,9 +47,9 @@ Include data hash, code commit, costs, failure/rejection reason, and an equity a
 python3 -m unittest discover -s dashboard/tests -v
 ```
 
-Local UI: set `DASHBOARD_PASSWORD`, `INGEST_TOKEN`, and `COOKIE_SECURE=0`, then `python3 dashboard/server.py` (development only). Production uses Gunicorn via Dockerfile with secure cookies.
+Local UI: set `DASHBOARD_PASSWORD`, `INGEST_TOKEN`, and `COOKIE_SECURE=0`, then `python3 dashboard/server.py` (development only). Production uses Gunicorn via Dockerfile with secure cookies. Set `PUBLIC_ORIGIN` to the exact HTTPS dashboard origin for proxy-safe form validation.
 
 ## Deployment
 
 Railway project: `qvsd-research-lab`; service: `dashboard`; volume: `/data`.
-Deploy with `railway up --service dashboard`. Secrets are Railway variables; local `.dashboard-secrets.json` is ignored. Public source contains no credentials or proprietary ticks.
+Infrastructure is defined in `.railway/railway.ts` (Railway SDK is a dev dependency). Use `npm ci`, then `railway config plan` and inspect before `railway config apply`. The volume and its mount must be preserved. Deploy application code with `railway up --service dashboard`. Secrets are Railway variables; local `.dashboard-secrets.json` is ignored. Public source contains no credentials or proprietary ticks.
