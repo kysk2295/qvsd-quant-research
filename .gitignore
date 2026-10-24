@@ -17,6 +17,7 @@ venv/
 .railway/*
 !.railway/railway.ts
 .dashboard-secrets.json
+.dashboard-access.txt
 .dashboard-worker.json
 .dashboard-state.json
 *.sqlite3
