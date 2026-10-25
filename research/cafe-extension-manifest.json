@@ -1,0 +1,16 @@
+{
+  "version": 1,
+  "source": "Existing cafe strategy evidence in research/report.html and native/CodexCafeRange.cs; exact original parity unverified",
+  "hypothesis": "Frozen OR-retest and failed-IB rules may have positive after-cost expectancy; currently only 1-4 development trades",
+  "rules": "Preserve installed CodexCafeRange Variant 2 RangeMinutes 15/30 and Variant 3 RangeMinutes 15 (internally fixed IB60); no parameter tuning",
+  "data_requirements": {"instrument":"NQ DEC26", "type":"Last ticks plus complete 5-minute RTH bars", "initial_extension":"2026-10-16", "target":"60 complete sessions if available without payment; continue prospective accumulation otherwise", "regimes":"Report daily range and volatility coverage descriptively; no claim all regimes represented"},
+  "expected_frequency": {"basis":"Observed development only, not future guarantee", "retest15":"1 trade in 6 sessions", "retest30":"2 trades in 6 sessions", "failedIB":"4 trades in 6 sessions", "implication":"60 sessions can still leave rare retests inconclusive; no universal trade-count pass"},
+  "metrics": ["cost-adjusted net", "daily net including zero-trade sessions", "trade concentration", "net excluding best 1 and 3 positive trades", "cost sensitivity", "session-block uncertainty when enough distinct sessions", "closed and path drawdown reported separately"],
+  "costs": {"base_slippage_ticks":2,"base_round_trip_fee":5,"stress_slippage_ticks":4,"stress_round_trip_fee":10,"fee_basis":"assumption, not verified broker tariff"},
+  "risk": "Keep existing NQ-only one-contract, $300 entry risk cap and historical-only guard; no live orders, no risk expansion",
+  "search_budget": {"new_parameters":0,"extension_runs":6,"data_acquisition":"existing permitted account only; no purchase"},
+  "chronological_split": {"role":"historical_extension", "dates":["2026-10-16"],"reason":"Acquired after selection but precedes already-observed Oct19-22; not pristine chronological OOS", "known_observed":"Sep29-Oct6 and Oct19-22; never reuse as independent OOS", "future":"Reserve later unseen dates before opening results; prospective paper validation separately"},
+  "coverage_policy": {"unit":"session","universal_min_trades":false,"initial_extension_is_diagnostic_only":true,"retest":"Rare event: continue gathering sessions; report active-session ratio and concentration; positive few trades remains deferred", "failedIB":"Higher observed frequency: same distinct-session audit; compare daily net and session dependence", "uncertainty":"Below 60 distinct complete sessions report insufficient coverage; at 60+ assess daily dependence, session-block sensitivity and confidence interval. No promotion solely from count or positive net; uncertainty crossing zero remains deferred", "pre_registration_limit":"This policy is prospective for extension, not represented as preregistration of the already completed runs"},
+  "stop_policy": "Stop current batch on corrupt data, native errors, source/hash changes or duplicate fingerprint. Negative observed net is sample failure, not permanent discard. Data unavailable: retain exact blocker and restart condition, proceed to other feasible candidate. Only eligible candidates progress to order/fill Replay, then new-data simulated forward test."
+}
+

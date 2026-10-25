@@ -1,5 +1,19 @@
 [
   {
+    "file": "data\\runner\\nt-import\\20261016\\NQ DEC26.Last.txt",
+    "sha256": "3042c2ac4da24565d677d95704a4001552be82792fa91a332a105c74e3923579",
+    "ticks": 691212,
+    "volume": 745608,
+    "sessions": [
+      {
+        "date": "2026-10-16",
+        "minutes": 390,
+        "rthVolume": 632796,
+        "missingMinutes": []
+      }
+    ]
+  },
+  {
     "file": "data\\runner\\nt-import\\20261019\\NQ DEC26.Last.txt",
     "sha256": "2a99f5b439637809288db1ea72f267fcefdc65a30fc4e0322642fec19f4e7d90",
     "ticks": 573122,

@@ -1,0 +1,17 @@
+# Pre-registered doji research batch
+
+NQ only. Sources and source limitations are recorded in research/candidate-backlog.json. Cafe28/29 inaccessible in current web fetch; prior GitHub analysis is the evidence for their motifs. This is an independent explicit adaptation, not exact original code reproduction. TA-Lib CDLDOJI source confirms a causal preceding-range comparison; no third-party code is copied.
+
+Two candidates, maximum six executions each. Candidate A: all-session doji after bearish candle; target 0.6 of previous bearish body, with one limited alternative1.0. Candidate B: first30 vs first60 RTH minutes, at most one entry/day, target0.6. Doji body <=0.1 average high-low of ten preceding completed candles. No future candles are used. Native one-minute bars, order at signal close, historical next-bar market fill. Stop one tick below doji low, target distance in ticks relative to actual entry, maximum10 bars holding, flatten15:55ET. Entries start only after ten contiguous RTH minutes, end15:45ET; missing RTH bars disable entries for day. Not a bid/ask or L2 strategy.
+
+One NQ contract, maximum pre-entry estimated loss $300 using adverse entry+exit allowance of two total points and $10 round-trip fee: (signal close - stop + 2)*20+10. This is a research constraint, not official competition policy; gaps can exceed it. Daily realized-$900 entry halt includes an approximate $10 per completed trade. No raising limits after observing outcomes. Four entries/day maximum, no forced entries. Long only.
+
+Development: Sep29–Oct6 ET, already observed six sessions. Compare base2tick/$5 and stress4tick/$10. Choose highest stress net, tie baseline. Recent: Oct19–22 ET, already observed four sessions; High Tick1 fills using verified recent native tick history, Tick Replay=false. No untouched OOS claim. Source/data hashes captured before execution; raw native response persisted before telemetry and ACK. Never automatically resubmit an uncertain POST.
+
+Classification: implementation_error for errors/settings/order mismatch; data_insufficient for missing evaluated sessions; no_signal if zero patterns; condition_mismatch for all opportunities excluded by risk; performance_rejected for negative cost-adjusted net; sample_insufficient for too few trades. A positive result alone is not approval. Provisional Replay consideration needs >=30 development and>=20 recent trades, positive stress net in both, recent stress PF>=1.2, no errors, and no >50% positive net concentration in one trade. Failure moves to the next candidate without duplicating the same fingerprint. True forward validation remains future data after rule freeze.
+
+## Completed results
+
+All 12 native executions completed and received dashboard ACKs. All-session target1.0 selected by development stress net: development base 24 trades +$395, stress -$355; recent 16 trades -$1,785 base / -$1,865 stress. Opening30 selected over Opening60: recent three trades -$275 base / -$290 stress. No candidate qualifies for Replay promotion. The positive 24-trade result is deferred, not discarded as evidence of no edge.
+
+The above numeric trade gates are historical batch criteria. The subsequent research protocol separates execution status and evidence sufficiency, and requires candidate-specific session coverage/frequency reasoning before new experiments. Do not infer independent observations by adding trades from repeated cost variants. See `docs/research-protocol-2026-10-25.md`.
