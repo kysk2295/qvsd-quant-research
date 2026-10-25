@@ -10,6 +10,7 @@ NinjaTrader 역사 백테스트는 수행했지만 독립 미사용 기간과 �
 - [단일 실행·결과 검증 준비](docs/nq-prospective-execution-preparation-2026-10-25.md): 합성 검사 35개 통과, 실제 신규 백테스트 0회. 미래 실행 전후의 증거를 분리했으며 생산 연결·전략 검증은 미완료입니다.
 - [미래 결과 판독기 준비](docs/nq-postrun-evaluator-preparation-2026-10-25.md): 정밀 체결 로그·분봉/진입·비용·Last 보유 경로의 합성 검사 44개 통과. 실제 미래 성과·청산 주문 인과관계는 미검증입니다.
 - [실제 설치·실행 준비 점검](docs/nq-deployment-readiness-audit-2026-10-25.md): 설치 소스 일치와 백테스트용 전략 목록 확인. 일반 타입 조회 오류의 범위를 확인했고, 데이터 수집과 NinjaTrader import 사이의 연결은 별도로 남겨 두었습니다.
+- [미래 자료 가져오기 연결](docs/nq-future-import-preparation-2026-10-25.md): 정규장 추출·해시·품질 ACK와 날짜당 한 번의 import 제출/상태 기록 연결. 합성 검사 47개 통과, 실제 import·전략 검증은 미실행입니다.
 - [최근 시장 상태](docs/nq-market-state-baseline-2026-10-25.md) / [두 예측 가설의 결과](docs/nq-state-response-study-2026-10-25.md)
 - [기존 전략의 확장 지표](docs/extended-metrics-results-2026-10-25.md)
 - [10월 23일 데이터 제외 근거](docs/nrd-oct23-quality-diagnosis-2026-10-25.md)
