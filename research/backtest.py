@@ -53,7 +53,7 @@ def exit_fill(b,side,stop,target,slip):
         if b['l']<=target:return target,'target'
     return None
 
-def run(sessions,symbol,strategy,slip_ticks=2,fee=2.5,or_minutes=15):
+def run(sessions,symbol,strategy,slip_ticks=2,fee=2.5,or_minutes=15,max_contracts=10):
     tick=SPECS[symbol]['tick'];point=SPECS[symbol]['point'];slip=slip_ticks*tick
     trades=[];daily=[];equity=150000.;peak=equity;dd=0.;min_equity=equity
     for day,bs in sessions.items():
@@ -69,7 +69,7 @@ def run(sessions,symbol,strategy,slip_ticks=2,fee=2.5,or_minutes=15):
                     target=entry+side*2*distance if target_hint is None else target_hint
                     target=round(round(target/tick)*tick,8)
                     reward=side*(target-entry)
-                    qty=min(10,math.floor(300/(distance*point+slip*point+fee)))
+                    qty=min(max_contracts,math.floor(300/(distance*point+slip*point+fee)))
                     if qty>0 and reward>=distance:
                         pos=dict(side=side,entry=entry,stop=stop,target=target,qty=qty,entry_time=b['dt'].isoformat(),start_i=i)
                         n+=1
