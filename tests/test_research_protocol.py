@@ -2,6 +2,7 @@ import json,tempfile,unittest
 from pathlib import Path
 from runner.assessment import assess,ledger_evidence
 from runner.research_protocol import validate_manifest,enqueue_extension
+from runner.cafe_extension import reject_previous_request
 
 class ResearchProtocolTests(unittest.TestCase):
     def test_positive_small_sample_and_concentration(self):
@@ -24,5 +25,11 @@ class ResearchProtocolTests(unittest.TestCase):
             self.assertEqual(tasks[2]['depends_on'],tasks[1]['id'])
     def test_missing_manifest_rejected(self):
         with self.assertRaises(ValueError):validate_manifest({'source':'test'})
+    def test_changed_manifest_does_not_allow_repeat_native_submission(self):
+        with tempfile.TemporaryDirectory() as d:
+            folder=Path(d);request={'inputs':{'FirstDate':20261016,'Variant':2}}
+            (folder/'old-hash.json').write_text(json.dumps({'request':request,'state':'submitting','manifest_hash':'old'}))
+            with self.assertRaises(RuntimeError):reject_previous_request(folder,request)
+            reject_previous_request(folder,{'inputs':{'FirstDate':20261015,'Variant':2}})
 
 if __name__=='__main__':unittest.main()
