@@ -23,6 +23,10 @@ class RsiCycle:
     levels=(5,2)
     requires_eth=True
     coverage_report_name=None
+    bars_value=5
+    rth_bars=78
+    def validate_native(self,doc):
+        pass
     def lineage(self,request,data_hash):
         return check_prior_records(self.state['experiments'].values(),request,self.manifest.get('quality_correction'),data_hash,self.sh)
     def __init__(self):
@@ -50,7 +54,7 @@ class RsiCycle:
         end=self.manifest['data_requirements'].get('recent_request_to','2026-10-23') if recent else '2026-10-07'
         files=sorted(p for kind in (('minute','tick') if recent else ('minute',)) for p in (db/kind/'NQ 12-26').glob('*.ncd'))
         assert files;dh=dataset_hash(files)
-        req=dict(strategy=self.strategy,instrument='NQ DEC26',barsPeriod={'type':'Minute','value':5},
+        req=dict(strategy=self.strategy,instrument='NQ DEC26',barsPeriod={'type':'Minute','value':self.bars_value},
             inputs={self.parameter:level,'FirstDate':int(min(compact)),'LastDate':int(max(compact))},
             tickReplay=False,includeCommission=False,includeTradeHistory=True,slippageTicks=slip,
             fillResolution='High' if recent else 'Standard',breakAtEod=True,
@@ -89,7 +93,8 @@ class RsiCycle:
             assert doc['tickReplay'] is False and len(doc['trades'])==doc['summary']['trades']
             assert not any('ORDER_ERROR' in x for x in doc['output'])
             audits=[x for x in doc['output'] if x.startswith('AUDIT ')]
-            if {x.split()[1] for x in audits}!=compact or any('bars=78 gap=False' not in x for x in audits):data_issue='Incomplete native RTH audit'
+            if {x.split()[1] for x in audits}!=compact or any(f'bars={self.rth_bars} gap=False' not in x for x in audits):data_issue='Incomplete native RTH audit'
+            self.validate_native(doc)
             for t in doc['trades']:
                 entry=datetime.fromisoformat(t['entryTime']).replace(tzinfo=ZoneInfo('Asia/Seoul')).astimezone(ZoneInfo('America/New_York'))
                 assert entry.strftime('%Y%m%d') in compact and t['qty']==1
@@ -106,7 +111,7 @@ class RsiCycle:
             native_bars_from=doc.get('barsFrom'),native_bars_to=doc.get('barsTo'),warnings=doc.get('warnings'),
             complete_eth_indicator_history_verified=bool(coverage_report) if self.requires_eth else None,
             coverage_evidence=self.coverage_report_name,
-            note=('Observed scheduled ETH intervals and required indicator context verified; interval presence does not establish lossless tick completeness.' if coverage_report else 'RTH coverage does not verify full ETH indicator history. Warmup days are not fully entry-eligible sessions.') if self.requires_eth else 'ETH indicator history not required: same-session RTH channel only.')
+            note=('Observed scheduled ETH intervals and required indicator context verified; interval presence does not establish lossless tick completeness.' if coverage_report else 'RTH coverage does not verify full ETH indicator history. Warmup days are not fully entry-eligible sessions.') if self.requires_eth else 'ETH indicator warmup is not required; consult the strategy-specific session/context evidence.')
         for date in dates:review['ledger_evidence']['daily_net'].setdefault(date,0)
         review['next_action']='Review frozen hypothesis; positive/zero samples need broader session evidence; never tune against recent results'
         if warmup_dates:
