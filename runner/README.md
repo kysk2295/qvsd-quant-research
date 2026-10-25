@@ -30,6 +30,14 @@ completed regardless of PnL because completion only verifies computation.
 Next research needs longer verified NQ L1/L2, frozen hypotheses, a new untouched
 time window, and walk-forward selection strictly within training windows.
 
+Evaluation stages remain distinct: recent-period training/optimization, unused
+chronological validation, historical regime risk review, and paper forward
+testing on genuinely new incoming data. A 20-session train / 5-session test
+window is only an example, not a default forced onto inadequate data. Historical
+Playback is replay validation, never new-data forward testing. Once OOS results
+inform a modification, that window becomes examined data for the new version.
+Every attempt remains in the queue history, including preflight failures.
+
 Assumed base costs: 2 ticks slippage per execution, $5 round-trip per contract;
 stress: 4 ticks and $10. These are assumptions, not verified broker fees. Native
 NT applies its slippage model; commission is explicitly disabled in NT and

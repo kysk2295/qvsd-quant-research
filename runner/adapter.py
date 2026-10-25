@@ -12,7 +12,7 @@ class Bridge:
                    (method in ('GET','DELETE') and path.startswith('/backtest/') and
                     path[len('/backtest/'):].isalnum()))
         if not allowed: raise ValueError('Endpoint outside research allowlist')
-        req=Request('http://127.0.0.1:7891'+path,
+        req=Request('http://localhost:7891'+path,
                     json.dumps(body).encode() if body is not None else None,
                     {'Content-Type':'application/json'},method=method)
         with urlopen(req,timeout=5) as response: return json.load(response)
