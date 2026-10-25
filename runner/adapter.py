@@ -13,6 +13,9 @@ class Bridge:
                    (method in ('GET','DELETE') and path.startswith('/backtest/') and
                     path[len('/backtest/'):].isalnum()))
         if not allowed: raise ValueError('Endpoint outside research allowlist')
+        if method == 'POST' and path == '/backtest':
+            from .campaign_gate import ensure_native_submission_allowed
+            ensure_native_submission_allowed()
         req=Request('http://localhost:7891'+path,
                     json.dumps(body).encode() if body is not None else None,
                     {'Content-Type':'application/json'},method=method)

@@ -1,0 +1,34 @@
+"""Freeze future evaluation without reading future returns or enabling orders."""
+import json,time,re
+from datetime import datetime,date,timedelta,timezone
+from zoneinfo import ZoneInfo
+from runner.core import ROOT,atomic,file_hash
+
+def main():
+    path=ROOT/'research/bollinger-prospective-plan.json';assert not path.exists()
+    registry=json.loads((ROOT/'research/campaign-trial-registry.json').read_text());old=json.loads((ROOT/'research/bollinger-return-manifest.json').read_text())
+    original=(ROOT/'native/CodexBollingerReturn.cs').read_text();clock=(ROOT/'native/CodexBollingerClock.cs').read_text()
+    stripped='\n'.join(line for line in clock.splitlines() if 'CLOCK_' not in line).replace('CodexBollingerClock','CodexBollingerReturn').replace('CodexClockBandMath','CodexBandMath')
+    assert re.sub(r'\s+','',stripped)==re.sub(r'\s+','',original),'Only names and logging may differ'
+    now=datetime.now(timezone.utc);first=date(2026,10,26);last=date(2026,11,6);dates=[];day=first
+    while day<=last:
+        if day.weekday()<5:dates.append(day.isoformat())
+        day+=timedelta(days=1)
+    assert now<datetime(2026,10,26,9,30,tzinfo=ZoneInfo('America/New_York')) and len(dates)==10
+    assert not set(dates)&set(registry['observed_dates'])
+    decision='2026-11-07T10:00:00+09:00'
+    request=dict(strategy='CodexBollingerClock',instrument='NQ DEC26',barsPeriod=dict(type='Minute',value=1),inputs=dict(BandLength=20,FirstDate=20261026,LastDate=20261106),tickReplay=False,includeCommission=False,includeTradeHistory=True,slippageTicks=2,fillResolution='High',fillResolutionType='Tick',fillResolutionValue=1,breakAtEod=True,**{'from':'2026-10-25','to':'2026-11-07'})
+    plan=dict(version=1,id='bollinger-prospective-20261026-1106',frozen_at_utc=now.isoformat(),status='reserved_future_unobserved_not_completed_oos',selection_reason='One alreadyfrozenpositivebutcostfragile candidate selected for outoftime falsification;not best-return search and not promoted. All competingfamilies heldfixed duringreservation.',source_manifest='research/bollinger-return-manifest.json',source_manifest_sha256=file_hash(ROOT/'research/bollinger-return-manifest.json'),source_code='native/CodexBollingerClock.cs',source_code_sha256=file_hash(ROOT/'native/CodexBollingerClock.cs'),original_code_sha256=file_hash(ROOT/'native/CodexBollingerReturn.cs'),logging_only_semantic_parity=True,rules=old['rules'],risk=old['risk'],nominal_preentry_risk_assumption=300,risk_scope='Realized-$900entryhalt isnot harddailyloss/accountcap;no riskincrease;1NQonly;max4firsteligibleentries/day',evaluation_dates=dates,session='America/New_York09:30-16:00;390minutesfullsession;DSTresolvedbytimezone,notfixedKST',decision_at=decision,request=request,
+        frozen_costs=dict(native_slippage_setting=2,native_cost_variants=1,assumed_roundtrip_fees=[5,10],additional_adverse_ticks_per_fill=[2,4],policy='NativeLastfills baseline;externalfee and incrementaltick arithmetic separatelylabeled;no claim2ticksactuallyrealized'),
+        search_budget=dict(candidate_families=1,parameter_configurations=1,reserved_native_attempts=1,active_native_attempts=0,optimization=0,retries_after_uncertain_submission=0,additional_old_date_trials=0),
+        assessment=dict(quality='All10datescomplete;sourcehash,session,DST,signal,clock andledgerparity;anymissingday makes incomplete,never replaceor silentlyskip',zero_trade='Conditionabsent/notperformanceevaluable',cost_gate='Highfee+$4ticksperfill incremental sensitivity must bepositive for furtherconsideration',concentration_gate='Highfee netafterremovingbestpositiveday must bepositive for furtherconsideration',path_risk='Reconstruct rawLastmarked equity usingfullprecisionclocks,realizedfeesandopenposition path;recordworstday andintratrade drawdown;no accountcompliance claim without it',success_label='Atmost eligible_for_longer_preregistered_validation;10sessions cannot alone prove edge or authorize live trading',failure_label='Missed fixedgate inthissample;notfamilyrejection',interim_peeking='No candidatePNL/nativeperformance inspection beforedecisiondate;qualityonlyaudits allowed;no earlysuccessstop or windowextension'),
+        data_acquisition=dict(source='Existing-entitlement native historical/hosted recorded Last data only',max_submission_per_date=1,max_downloads_total=10,max_downloads_per_chunk=3,purchases=False,precondition='Sessionmusthaveclosed;fileintegrity+390minutecheck beforeuse;provideravailability unverified untildatearrives',policy='No Playbackcontrol/order endpoint retries;failedacquisition records reason,resumeafterexternalchange,never silentlyretry'),
+        readiness=dict(prospective_historical_validation='Preparedrequest,source andrulesfrozen;awaitfuturedata anddecisiontime',realtime_paper_forward='Not configured or validated;policyblocked control path remains unavailable. Do not call futurebatch nativebacktest realtimeforward.',live_trading=False,scheduled_automation=False),
+        contamination_policy='Any rules/cost/risk/selectionchange or candidateoutcomepeek invalidates reservation for unchanged-plan OOS claim;markconsumed and preregisterdifferentfutureperiod. Alreadyobserveddates never renamedOOS.',campaign_registry_sha256=file_hash(ROOT/'research/campaign-trial-registry.json'))
+    atomic(path,plan)
+    control=dict(version=1,campaign='nq-observed-development-closed-20261025',created_at=now.isoformat(),native_submission_mode='frozen_pending_prospective_release',new_historical_candidate_budget=0,additional_observed_date_performance_runs=0,active_native_diagnostic_budget=0,reason='Repeatedcandidate selection on sameobserveddata exhausted useful exploration;freeze before untouchedfuturevalidation',prospective_plan=str(path.relative_to(ROOT)),prospective_plan_sha256=file_hash(path),future_reserved_native_attempts=1,selection_policy='OnefrozenBollinger candidate. All otherfamilies retained withstatuses;no midwindow replacement,ranking,optimization or extra trials.',release_conditions=['Decisiontime reached','Allfixedfuturedata audited without outcomepeeking','Source/manifest/rulehash unchanged','Unique singleattempt executionpacket logged','No explicituserstop or policyblock'],scope='Enforced in Python research Bridge POST/backtest;directexternaltools must alsohonor budget,not technicallycontrolled by thisfile')
+    atomic(ROOT/'research/campaign-search-control.json',control)
+    p=ROOT/'research/data-role-registry.json';r=json.loads(p.read_text());r['reserved_future_validation_dates']=dates;r['reservation_plan']='research/bollinger-prospective-plan.json';r['independent_oos_dates']=[];r['prospective_reservation']='Fixed10session futurewindow,awaitingdata/decision;notcompletedOOS';atomic(p,r)
+    print(json.dumps(dict(reserved_dates=dates,decision_at=decision,current_native_budget=0,future_reserved_attempts=1,logging_only_parity=True)))
+
+if __name__=='__main__':main()
