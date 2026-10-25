@@ -1,0 +1,34 @@
+{
+  "id": "pr1",
+  "state": "done",
+  "request": {
+    "from": "2026-10-21T09:29:00",
+    "to": "2026-10-21T10:31:00",
+    "speed": 1000,
+    "stopAtEnd": true
+  },
+  "queuedAt": "2026-10-25T13:16:20",
+  "startedAt": "2026-10-25T13:16:20",
+  "finishedAt": "2026-10-25T13:16:50",
+  "before": {
+    "clockEst": "2026-10-22T09:29:00",
+    "speed": 0
+  },
+  "clockStartEst": "2026-10-21T09:29:00",
+  "clockEndEst": "2026-10-21T10:31:00",
+  "reachedTo": true,
+  "wallSeconds": 30.3224275,
+  "executions": [
+    {
+      "account": "Playback101",
+      "windowFromEst": "2026-10-21T06:29:00",
+      "windowToEst": "2026-10-21T13:31:00",
+      "source": "db",
+      "count": 0,
+      "executions": [],
+      "warnings": []
+    }
+  ],
+  "warnings": [],
+  "error": null
+}

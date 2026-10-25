@@ -1,0 +1,461 @@
+{
+  "settings": [
+    {
+      "id": 191,
+      "type": "PropertyNameTextBlock",
+      "name": "pName",
+      "label": "Backtest type",
+      "fields": {
+        "Text": "Backtest type"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 193,
+      "type": "PropertyNameTextBlock",
+      "name": "pName",
+      "label": "Strategy",
+      "fields": {
+        "Text": "Strategy"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 194,
+      "type": "NinjaScriptSelector",
+      "name": "nsSelector",
+      "label": "",
+      "fields": {
+        "SelectedText": "CodexCafeRange",
+        "ShortTypeName": "CodexCafeRange"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 195,
+      "type": "PropertyNameTextBlock",
+      "name": "pName",
+      "label": "FirstDate",
+      "fields": {
+        "Text": "FirstDate"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 196,
+      "type": "NumericTextBox",
+      "name": "PART_editor",
+      "label": "20261019",
+      "fields": {
+        "SelectedText": "",
+        "Text": "20261019"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 197,
+      "type": "PropertyNameTextBlock",
+      "name": "pName",
+      "label": "LastDate",
+      "fields": {
+        "Text": "LastDate"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 198,
+      "type": "NumericTextBox",
+      "name": "PART_editor",
+      "label": "20261022",
+      "fields": {
+        "SelectedText": "",
+        "Text": "20261022"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 199,
+      "type": "PropertyNameTextBlock",
+      "name": "pName",
+      "label": "RangeMinutes",
+      "fields": {
+        "Text": "RangeMinutes"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 200,
+      "type": "NumericTextBox",
+      "name": "PART_editor",
+      "label": "15",
+      "fields": {
+        "SelectedText": "",
+        "Text": "15"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 201,
+      "type": "PropertyNameTextBlock",
+      "name": "pName",
+      "label": "Variant",
+      "fields": {
+        "Text": "Variant"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 202,
+      "type": "NumericTextBox",
+      "name": "PART_editor",
+      "label": "3",
+      "fields": {
+        "SelectedText": "",
+        "Text": "3"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 203,
+      "type": "PropertyNameTextBlock",
+      "name": "pName",
+      "label": "Instrument",
+      "fields": {
+        "Text": "Instrument"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 204,
+      "type": "InstrumentSelector",
+      "name": "instrumentSelector",
+      "label": "",
+      "fields": {
+        "Instrument": "NQ DEC26 Globex"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 205,
+      "type": "PropertyNameTextBlock",
+      "name": "pName",
+      "label": "Price based on",
+      "fields": {
+        "Text": "Price based on"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 207,
+      "type": "PropertyNameTextBlock",
+      "name": "pName",
+      "label": "Type",
+      "fields": {
+        "Text": "Type"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 209,
+      "type": "PropertyNameTextBlock",
+      "name": "pName",
+      "label": "Value",
+      "fields": {
+        "Text": "Value"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 210,
+      "type": "NumericTextBox",
+      "name": "PART_editor",
+      "label": "5",
+      "fields": {
+        "SelectedText": "",
+        "Text": "5"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 211,
+      "type": "PropertyNameTextBlock",
+      "name": "pName",
+      "label": "Start date",
+      "fields": {
+        "Text": "Start date"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 212,
+      "type": "XamDateTimeEditor",
+      "name": "PART_editor",
+      "label": "",
+      "fields": {
+        "Value": "2026-10-19T00:00:00.0000000",
+        "SelectedText": "",
+        "Text": "2026-10-19"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 213,
+      "type": "PropertyNameTextBlock",
+      "name": "pName",
+      "label": "End date",
+      "fields": {
+        "Text": "End date"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 214,
+      "type": "XamDateTimeEditor",
+      "name": "PART_editor",
+      "label": "",
+      "fields": {
+        "Value": "2026-10-23T00:00:00.0000000",
+        "SelectedText": "",
+        "Text": "2026-10-23"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 215,
+      "type": "PropertyNameTextBlock",
+      "name": "pName",
+      "label": "Trading hours",
+      "fields": {
+        "Text": "Trading hours"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 217,
+      "type": "PropertyNameTextBlock",
+      "name": "pName",
+      "label": "Break at EOD",
+      "fields": {
+        "Text": "Break at EOD"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 219,
+      "type": "PropertyNameTextBlock",
+      "name": "pName",
+      "label": "Include commission",
+      "fields": {
+        "Text": "Include commission"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 221,
+      "type": "PropertyNameTextBlock",
+      "name": "pName",
+      "label": "Commission template",
+      "fields": {
+        "Text": "Commission template"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 223,
+      "type": "PropertyNameTextBlock",
+      "name": "pName",
+      "label": "Maximum bars look back",
+      "fields": {
+        "Text": "Maximum bars look back"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 225,
+      "type": "PropertyNameTextBlock",
+      "name": "pName",
+      "label": "Bars required to trade",
+      "fields": {
+        "Text": "Bars required to trade"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 226,
+      "type": "NumericTextBox",
+      "name": "PART_editor",
+      "label": "14",
+      "fields": {
+        "SelectedText": "",
+        "Text": "14"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 227,
+      "type": "PropertyNameTextBlock",
+      "name": "pName",
+      "label": "Order fill resolution",
+      "fields": {
+        "Text": "Order fill resolution"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 229,
+      "type": "PropertyNameTextBlock",
+      "name": "pName",
+      "label": "Fill limit orders on touch",
+      "fields": {
+        "Text": "Fill limit orders on touch"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 231,
+      "type": "PropertyNameTextBlock",
+      "name": "pName",
+      "label": "Slippage",
+      "fields": {
+        "Text": "Slippage"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 232,
+      "type": "NumericTextBox",
+      "name": "PART_editor",
+      "label": "4",
+      "fields": {
+        "SelectedText": "",
+        "Text": "4"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 233,
+      "type": "PropertyNameTextBlock",
+      "name": "pName",
+      "label": "Entries per direction",
+      "fields": {
+        "Text": "Entries per direction"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 234,
+      "type": "NumericTextBox",
+      "name": "PART_editor",
+      "label": "1",
+      "fields": {
+        "SelectedText": "",
+        "Text": "1"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 235,
+      "type": "PropertyNameTextBlock",
+      "name": "pName",
+      "label": "Entry handling",
+      "fields": {
+        "Text": "Entry handling"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 237,
+      "type": "PropertyNameTextBlock",
+      "name": "pName",
+      "label": "Exit on session close",
+      "fields": {
+        "Text": "Exit on session close"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 239,
+      "type": "PropertyNameTextBlock",
+      "name": "pName",
+      "label": "Set order quantity",
+      "fields": {
+        "Text": "Set order quantity"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 241,
+      "type": "PropertyNameTextBlock",
+      "name": "pName",
+      "label": "Time in force",
+      "fields": {
+        "Text": "Time in force"
+      },
+      "enabled": true,
+      "items": []
+    }
+  ],
+  "output": {
+    "lines": [
+      "[2] NT8Bridge v1.5.0 listening on http://localhost:7891/",
+      "[1] SIZE_REJECT 20261019 risk=360",
+      "[1] SIZE_REJECT 20261019 risk=345",
+      "[1] SIZE_REJECT 20261019 risk=435",
+      "[1] AUDIT 20261019 bars=77 gap=False entries=0",
+      "[1] SIZE_REJECT 20261020 risk=1540",
+      "[1] SIZE_REJECT 20261020 risk=640",
+      "[1] AUDIT 20261020 bars=77 gap=False entries=0",
+      "[1] SIZE_REJECT 20261021 risk=835",
+      "[1] SIZE_REJECT 20261021 risk=465",
+      "[1] SIZE_REJECT 20261021 risk=1070",
+      "[1] AUDIT 20261021 bars=77 gap=False entries=0",
+      "[1] SIZE_REJECT 20261022 risk=1260",
+      "[1] SIZE_REJECT 20261022 risk=1040",
+      "[1] SIZE_REJECT 20261022 risk=350",
+      "[1] SIZE_REJECT 20261022 risk=485",
+      "[1] AUDIT 20261022 bars=77 gap=False entries=0"
+    ],
+    "index": 17,
+    "dropped": 0,
+    "subscribed": true,
+    "source": "ring"
+  },
+  "note": "Native Strategy Analyzer recent Variant=3, 5 minute, slippage4, no commission. Four audit days and twelve size rejections; zero trades."
+}

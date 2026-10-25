@@ -1,0 +1,146 @@
+[
+  {
+    "inputs": {
+      "Variant": 2,
+      "RangeMinutes": 15,
+      "FirstDate": 20260929,
+      "LastDate": 20261006
+    },
+    "settings": {
+      "fillResolution": "High",
+      "fillResolutionType": "Minute",
+      "fillResolutionValue": 1,
+      "slippageTicks": 2,
+      "commissionTemplate": null,
+      "includeCommission": false,
+      "fillLimitOnTouch": false,
+      "includeTradeHistory": true,
+      "maxTrades": 0,
+      "template": null
+    },
+    "state": "done",
+    "trades": 1,
+    "nativeNet": 365,
+    "netAfterAssumedFee": 360
+  },
+  {
+    "inputs": {
+      "Variant": 2,
+      "RangeMinutes": 15,
+      "FirstDate": 20260929,
+      "LastDate": 20261006
+    },
+    "settings": {
+      "fillResolution": "High",
+      "fillResolutionType": "Minute",
+      "fillResolutionValue": 1,
+      "slippageTicks": 4,
+      "commissionTemplate": null,
+      "includeCommission": false,
+      "fillLimitOnTouch": false,
+      "includeTradeHistory": true,
+      "maxTrades": 0,
+      "template": null
+    },
+    "state": "done",
+    "trades": 1,
+    "nativeNet": 355,
+    "netAfterAssumedFee": 345
+  },
+  {
+    "inputs": {
+      "Variant": 2,
+      "RangeMinutes": 30,
+      "FirstDate": 20260929,
+      "LastDate": 20261006
+    },
+    "settings": {
+      "fillResolution": "High",
+      "fillResolutionType": "Minute",
+      "fillResolutionValue": 1,
+      "slippageTicks": 2,
+      "commissionTemplate": null,
+      "includeCommission": false,
+      "fillLimitOnTouch": false,
+      "includeTradeHistory": true,
+      "maxTrades": 0,
+      "template": null
+    },
+    "state": "done",
+    "trades": 2,
+    "nativeNet": 105,
+    "netAfterAssumedFee": 95
+  },
+  {
+    "inputs": {
+      "Variant": 2,
+      "RangeMinutes": 30,
+      "FirstDate": 20260929,
+      "LastDate": 20261006
+    },
+    "settings": {
+      "fillResolution": "High",
+      "fillResolutionType": "Minute",
+      "fillResolutionValue": 1,
+      "slippageTicks": 4,
+      "commissionTemplate": null,
+      "includeCommission": false,
+      "fillLimitOnTouch": false,
+      "includeTradeHistory": true,
+      "maxTrades": 0,
+      "template": null
+    },
+    "state": "done",
+    "trades": 2,
+    "nativeNet": 75,
+    "netAfterAssumedFee": 55
+  },
+  {
+    "inputs": {
+      "Variant": 3,
+      "RangeMinutes": 15,
+      "FirstDate": 20260929,
+      "LastDate": 20261006
+    },
+    "settings": {
+      "fillResolution": "High",
+      "fillResolutionType": "Minute",
+      "fillResolutionValue": 1,
+      "slippageTicks": 2,
+      "commissionTemplate": null,
+      "includeCommission": false,
+      "fillLimitOnTouch": false,
+      "includeTradeHistory": true,
+      "maxTrades": 0,
+      "template": null
+    },
+    "state": "done",
+    "trades": 4,
+    "nativeNet": 1475,
+    "netAfterAssumedFee": 1455
+  },
+  {
+    "inputs": {
+      "Variant": 3,
+      "RangeMinutes": 15,
+      "FirstDate": 20260929,
+      "LastDate": 20261006
+    },
+    "settings": {
+      "fillResolution": "High",
+      "fillResolutionType": "Minute",
+      "fillResolutionValue": 1,
+      "slippageTicks": 4,
+      "commissionTemplate": null,
+      "includeCommission": false,
+      "fillLimitOnTouch": false,
+      "includeTradeHistory": true,
+      "maxTrades": 0,
+      "template": null
+    },
+    "state": "done",
+    "trades": 4,
+    "nativeNet": 1415,
+    "netAfterAssumedFee": 1375
+  }
+]

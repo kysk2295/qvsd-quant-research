@@ -54,6 +54,8 @@ namespace NinjaTrader.NinjaScript.AddOns
             System.Collections.Specialized.NameValueCollection q, string body, ref int status)
         {
             if (seg.Length != 2 || seg[0] != "research") return null;
+            if (seg[1] == "import" && method == "GET") { lock (researchImportGate) return researchImportStatus; }
+            if (seg[1] == "import" && method == "POST") return Research_Import(body, ref status);
             if (method == "GET" && seg[1] == "status")
             {
                 double age; bool armed = Research_Flag(out age);
@@ -103,6 +105,66 @@ namespace NinjaTrader.NinjaScript.AddOns
                 return result;
             }
             catch (BadRequestException ex) { return Err(ref status, 400, ex.Message); }
+        }
+
+        private static readonly object researchImportGate = new object();
+        private static string researchImportStatus = "{\"state\":\"idle\"}";
+        private static bool researchImportRunning;
+        private sealed class ResearchImportProgress : Core.IProgress
+        {
+            public event EventHandler Aborted { add { } remove { } }
+            public bool IsAborted { get { return false; } }
+            public string Message { get; set; }
+            public void PerformStep() { }
+            public void SetUp(long maxSteps, bool isAbortable) { }
+            public void TearDown() { }
+        }
+        private static string Research_Import(string body, ref int status)
+        {
+            double age;
+            if (!Research_Flag(out age)) return Err(ref status, 403, "research disabled");
+            if (ConnSnapshot().Any(c => IsConnected(c))) return Err(ref status, 409, "disconnect all feeds before import");
+            string exposure = Data_Exposure();
+            if (exposure != null) return Err(ref status, 409, exposure);
+            var req = ParseJson(body) as Dictionary<string, object>;
+            if (req == null) return Err(ref status, 400, "JSON required");
+            string root = Path.GetFullPath(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "Codex", "qvsd-experiment-runner", "data", "runner", "nt-import")) + Path.DirectorySeparatorChar;
+            string path = Path.GetFullPath(JGetStr(req, "path", ""));
+            if (!path.StartsWith(root, StringComparison.OrdinalIgnoreCase) || Path.GetFileName(path) != "NQ DEC26.Last.txt" || !File.Exists(path))
+                return Err(ref status, 400, "only prepared NQ DEC26 Last text under nt-import allowed");
+            var instrument = Instrument.GetInstrument("NQ DEC26");
+            if (instrument == null || instrument.MasterInstrument.InstrumentType != InstrumentType.Future)
+                return Err(ref status, 400, "existing NQ future required");
+            using (var sha = System.Security.Cryptography.SHA256.Create())
+            using (var stream = File.OpenRead(path))
+            {
+                string actual = BitConverter.ToString(sha.ComputeHash(stream)).Replace("-", "").ToLowerInvariant();
+                if (actual != JGetStr(req, "sha256", "")) return Err(ref status, 400, "prepared file hash mismatch");
+            }
+            lock (researchImportGate)
+            {
+                if (researchImportRunning) return Err(ref status, 409, "import already running");
+                researchImportRunning = true;
+                researchImportStatus = Obj(P("state", Q("running")), P("path", Q(path)));
+            }
+            System.Threading.Tasks.Task.Run(() =>
+            {
+                var importer = new NinjaTrader.NinjaScript.ImportTypes.TextImportType();
+                try
+                {
+                    importer.SetState(State.SetDefaults);
+                    importer.FileNames = new[] { path };
+                    importer.EndOfBarTimestamps = true;
+                    importer.SetState(State.Configure);
+                    importer.Import(Data.MarketDataType.Last, TimeZoneInfo.Utc, true, false, new ResearchImportProgress());
+                    lock (researchImportGate) researchImportStatus = Obj(P("state", Q(importer.HasErrors ? "error" : "done")),
+                        P("path", Q(path)), P("points", importer.NumberOfDataPoints.ToString(CultureInfo.InvariantCulture)),
+                        P("instruments", Arr((importer.ImportedInstruments ?? new Instrument[0]).Select(i => Q(i.FullName)))));
+                }
+                catch (Exception ex) { lock (researchImportGate) researchImportStatus = Obj(P("state", Q("error")), P("error", Q(ex.ToString()))); }
+                finally { importer.Dispose(); lock (researchImportGate) researchImportRunning = false; }
+            });
+            return Obj(P("state", Q("queued")), P("path", Q(path)));
         }
 
         private static Window Research_FindWindow(string title)
@@ -162,7 +224,7 @@ namespace NinjaTrader.NinjaScript.AddOns
         private static string Research_Fields(FrameworkElement fe)
         {
             var fields = new List<string>();
-            foreach (string name in new[] { "Value", "SelectedDate", "SelectedText", "Instrument", "Text", "IsChecked", "IsExpanded", "SelectedIndex" })
+            foreach (string name in new[] { "Value", "SelectedDate", "SelectedText", "ShortTypeName", "Instrument", "Text", "IsChecked", "IsExpanded", "SelectedIndex" })
             {
                 var pi = fe.GetType().GetProperty(name, BindingFlags.Public | BindingFlags.Instance);
                 if (pi == null || !pi.CanRead || pi.GetIndexParameters().Length != 0) continue;
@@ -248,8 +310,8 @@ namespace NinjaTrader.NinjaScript.AddOns
                 if (analyzer)
                 {
                     var selector = snap.Controls.OfType<Gui.Tools.NinjaScriptSelector>().SingleOrDefault();
-                    if (selector == null || selector.SelectedText != "CodexCloseMomentum")
-                        throw new BadRequestException("Analyzer pilot requires observed CodexCloseMomentum");
+                    if (selector == null || !(selector.SelectedText == "CodexCloseMomentum" || selector.SelectedText == "CodexCafeRange"))
+                        throw new BadRequestException("Analyzer requires an allowlisted research strategy");
                     if (action == "invoke" && (!(fe is Button) || Research_Label(fe) != "Run"))
                         throw new BadRequestException("Analyzer pilot permits only Run button");
                 }
@@ -298,6 +360,12 @@ namespace NinjaTrader.NinjaScript.AddOns
                 else if (action == "set")
                 {
                     string property = JGetStr(req, "property", "Value");
+                    if (analyzer && fe is Gui.Tools.NinjaScriptSelector && property == "ShortTypeName")
+                    {
+                        if (value != "CodexCloseMomentum" && value != "CodexCafeRange") throw new BadRequestException("strategy outside research allowlist");
+                        ((Gui.Tools.NinjaScriptSelector)fe).ShortTypeName = value;
+                        return Obj(P("ok", "true"), P("note", Q("verify strategy parameters before Run")));
+                    }
                     if (analyzer && fe.GetType().FullName == "NinjaTrader.Gui.TradePerformance.DisplayModeSelector" && property == "Display")
                     {
                         if (value != "Trades" && value != "Summary") throw new BadRequestException("Only Trades or Summary view permitted");
