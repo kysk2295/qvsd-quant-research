@@ -53,9 +53,12 @@ def exit_fill(b,side,stop,target,slip):
         if b['l']<=target:return target,'target'
     return None
 
-def run(sessions,symbol,strategy,slip_ticks=2,fee=2.5,or_minutes=15,max_contracts=10):
+def run(sessions,symbol,strategy,slip_ticks=2,fee=2.5,or_minutes=15,max_contracts=10,diagnostics=None):
     tick=SPECS[symbol]['tick'];point=SPECS[symbol]['point'];slip=slip_ticks*tick
     trades=[];daily=[];equity=150000.;peak=equity;dd=0.;min_equity=equity
+    if diagnostics is not None:
+        diagnostics.update(signals=0,entry_attempts=0,rejected_distance=0,rejected_sizing=0,
+                           rejected_reward=0,filled_entries=0,sizing_required_risk=[])
     for day,bs in sessions.items():
         pnl=0.;n=0;pos=None;pending=None;armed=None;pv=0.;vol=0.;history=[]
         n_range=(60 if strategy=='failed_ib' else or_minutes)//5
@@ -63,6 +66,7 @@ def run(sessions,symbol,strategy,slip_ticks=2,fee=2.5,or_minutes=15,max_contract
         for i,b in enumerate(bs):
             # The last bar opens 15:55. Liquidate at that open, not an unknown close.
             if pending and pos is None and b['minute']<900:
+                if diagnostics is not None:diagnostics['entry_attempts']+=1
                 side,stop,target_hint=pending;entry=b['o']+side*slip
                 distance=side*(entry-stop)
                 if distance>=2*tick:
@@ -70,9 +74,16 @@ def run(sessions,symbol,strategy,slip_ticks=2,fee=2.5,or_minutes=15,max_contract
                     target=round(round(target/tick)*tick,8)
                     reward=side*(target-entry)
                     qty=min(max_contracts,math.floor(300/(distance*point+slip*point+fee)))
+                    if diagnostics is not None:
+                        if qty<=0:
+                            diagnostics['rejected_sizing']+=1
+                            diagnostics['sizing_required_risk'].append(distance*point+slip*point+fee)
+                        elif reward<distance:diagnostics['rejected_reward']+=1
                     if qty>0 and reward>=distance:
                         pos=dict(side=side,entry=entry,stop=stop,target=target,qty=qty,entry_time=b['dt'].isoformat(),start_i=i)
                         n+=1
+                        if diagnostics is not None:diagnostics['filled_entries']+=1
+                elif diagnostics is not None:diagnostics['rejected_distance']+=1
                 pending=None
             if pos:
                 p=pos
@@ -116,6 +127,7 @@ def run(sessions,symbol,strategy,slip_ticks=2,fee=2.5,or_minutes=15,max_contract
                 if b['h']>hi+buffer and mid<b['c']<hi:signal=(-1,b['h']+buffer,mid)
                 elif b['l']<lo-buffer and lo<b['c']<mid:signal=(1,b['l']-buffer,mid)
             if signal:
+                if diagnostics is not None:diagnostics['signals']+=1
                 side,stop,target=signal
                 # Protective levels must lie on exchange tick grid.
                 stop=(math.floor(stop/tick) if side==1 else math.ceil(stop/tick))*tick

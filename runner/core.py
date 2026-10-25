@@ -44,7 +44,7 @@ def validate(spec):
         if b.get('instrument') != 'NQ 12-26' or b.get('strategy') != 'SampleMACrossOver':
             raise ValueError('Native v1 allowlist: reviewed SampleMACrossOver, NQ 12-26 only')
         allowed = {'strategy','instrument','from','to','barsPeriod','inputs','tickReplay','fillResolution',
-                   'slippageTicks','includeCommission','fillLimitOnTouch','includeTradeHistory','breakAtEod'}
+                   'slippageTicks','includeCommission','fillLimitOnTouch','includeTradeHistory','breakAtEod','explicitBars'}
         if set(b)-allowed or b.get('tickReplay') is not False or b.get('includeTradeHistory') is not True:
             raise ValueError('Unexpected native request')
         if b.get('includeCommission') is not False or b.get('fillResolution') != 'Standard':

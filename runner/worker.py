@@ -47,7 +47,7 @@ class Worker:
         if s['engine']=='blocked':
             self.q.block(jid,s.get('blocked_reason','Required data unavailable'));return
         if (s['engine']=='nt' and self.q.control('coverage-block:'+s['data_hash']) and
-            not s['params'].get('expected_bars')):
+            not s['params'].get('expected_bars') and not s['request'].get('explicitBars')):
             self.q.block(jid,'Known native coverage mismatch; requires repaired data or explicit observed-window reproduction');return
         try: verify_files(s)
         except Exception as exc:
@@ -101,7 +101,7 @@ class Worker:
             if state=='done':
                 # Persist sanitized audit, never account details or raw market data in telemetry.
                 atomic(self.q.folder/(jid+'.native.json'),{k:doc.get(k) for k in
-                      ('state','settings','barsFrom','barsTo','warnings','summary','trades','equity')})
+                      ('state','settings','from','to','timeZone','explicitBars','barsFrom','barsTo','warnings','summary','trades','equity')})
                 try:
                     verify_files(s)
                     self.finish(jid,native_result(doc,s))

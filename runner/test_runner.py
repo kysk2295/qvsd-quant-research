@@ -105,6 +105,13 @@ class Tests(unittest.TestCase):
     def test_missing_native_window_is_rejected(self):
         doc=dict(settings={'slippageTicks':2,'includeCommission':False,'fillResolution':'Standard','includeTradeHistory':True},summary={'trades':0},trades=[])
         self.assertTrue(native_result(doc,self.s)['rejected'])
+    def test_warmup_bars_allowed_but_warmup_trades_rejected(self):
+        doc=dict(settings={'slippageTicks':2,'includeCommission':False,'fillResolution':'Standard','includeTradeHistory':True},
+                 summary={'trades':1},trades=[dict(pnl=50,qty=1,entryTime='2026-09-28T10:00:00',exitTime='2026-09-29T12:00:00')],
+                 barsFrom='2026-09-27T07:00:00',barsTo='2026-09-29T23:55:00',warnings=[])
+        self.assertFalse(native_result(doc,self.s)['rejected'])
+        doc['trades'][0]['entryTime']='2026-09-27T10:00:00'
+        r=native_result(doc,self.s);self.assertTrue(r['rejected']);self.assertEqual(r['metrics']['out_of_window_trades'],1)
     def test_changed_data_blocks_before_submit(self):
         Path(self.s['files'][0]).write_text('changed');jid=self.start()
         self.assertEqual(self.q.get(jid)['status'],'blocked');self.assertFalse(self.b.calls)

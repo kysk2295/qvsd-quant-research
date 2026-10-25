@@ -1,6 +1,16 @@
 import unittest, copy
 from backtest import exit_fill,load,run,SPECS
 class ExecutionTests(unittest.TestCase):
+ def test_diagnostics_do_not_change_trades_and_reconcile_attempts(self):
+  ss,_=load('NQ');old=SPECS['NQ']['point'];SPECS['NQ']['point']=20
+  try:
+   for strategy in ['breakout','retest','failed_ib']:
+    baseline=run(ss,'NQ',strategy,max_contracts=8);diag={}
+    observed=run(ss,'NQ',strategy,max_contracts=8,diagnostics=diag)
+    self.assertEqual(baseline,observed)
+    self.assertEqual(diag['entry_attempts'],sum(diag[k] for k in ['filled_entries','rejected_distance','rejected_sizing','rejected_reward']))
+    self.assertTrue(all(risk>300 for risk in diag['sizing_required_risk']))
+  finally:SPECS['NQ']['point']=old
  def test_long_ambiguous_bar_stop_first(self):
   self.assertEqual(exit_fill(dict(o=100,h=112,l=90),1,95,110,.5),(94.5,'stop'))
  def test_short_ambiguous_bar_stop_first(self):

@@ -53,13 +53,27 @@ def native_result(doc,spec):
         first=datetime.fromisoformat(doc['barsFrom']);last=datetime.fromisoformat(doc['barsTo'])
         start=datetime.fromisoformat(spec['request']['from']);end=datetime.fromisoformat(spec['request']['to'])
         if len(spec['request']['to'])==10:end+=timedelta(days=1,seconds=-1)
-        coverage_ok=(start<=first<=last<=end and first.date()==start.date() and last.date()==end.date()
+        # Earlier bars may be warmup. Every evaluated trade is checked separately below.
+        coverage_ok=(first<=last and first<=end and last>=start and first.date()<=start.date() and last.date()>=end.date()
                      and not any('not for the requested' in str(w).lower() for w in doc.get('warnings',[])))
+    outside=0
+    if coverage_ok:
+        start=datetime.fromisoformat(spec['request']['from']);end=datetime.fromisoformat(spec['request']['to'])
+        if len(spec['request']['to'])==10:end+=timedelta(days=1,seconds=-1)
+        for trade in trades:
+            try:
+                entry=datetime.fromisoformat(trade['entryTime']);exit=datetime.fromisoformat(trade['exitTime'])
+                if not start<=entry<=exit<=end:outside+=1
+            except (KeyError,TypeError,ValueError):outside+=1
+        coverage_ok=outside==0
+    if spec['params'].get('nt_time_zone') and doc.get('timeZone')!=spec['params']['nt_time_zone']:coverage_ok=False
+    if spec['request'].get('explicitBars') and doc.get('explicitBars') is not True:coverage_ok=False
     return dict(metrics=dict(net=round(sum(pnl),2),trades=len(pnl),closed_trade_mdd=round(dd,2),
-                             profit_factor=gains/losses if losses else None,
+                             profit_factor=gains/losses if losses else None,out_of_window_trades=outside,
                              win_pct=100*sum(x>0 for x in pnl)/len(pnl) if pnl else 0),equity=curve[-3000:],
                 evidence='Native settings verified; assumed commission deducted per contract round trip. '
                          +'Loaded bars: '+str(doc.get('barsFrom'))+' .. '+str(doc.get('barsTo'))
+                         +'; trade timestamps checked within evaluation window; NT zone: '+str(doc.get('timeZone'))
                          +'; warnings: '+str(doc.get('warnings',[])),
                 rejected=not coverage_ok,coverage_invalid=not coverage_ok,
                 reason=('NT 실제 적재 범위 일치 · 기능 재현 완료. 짧은 표본·부분 세션·기본 SMA: 채택 불가.' if coverage_ok else
@@ -72,9 +86,12 @@ def python_run(spec):
     sessions,audit=bt.load('NQ'); p=spec['params'];cost=spec['cost']
     selected={d:b for d,b in sessions.items() if p['from']<=d<=p['to']}
     if not selected: raise ValueError('No complete sessions in requested period')
+    diagnostic={}
     trades,daily,extra=bt.run(selected,'NQ',spec['strategy'],cost['slippage_ticks'],
-                             cost['round_trip_fee'],p['or_minutes'],max_contracts=8)
+                             cost['round_trip_fee'],p['or_minutes'],max_contracts=8,diagnostics=diagnostic)
     m=bt.metrics(trades,daily);m.update(extra)
+    risk=diagnostic.pop('sizing_required_risk');m.update(diagnostic)
+    m['min_rejected_contract_risk']=min(risk) if risk else None
     m['net_without_best3']=round(m['net']-sum(sorted((t['pnl'] for t in trades),reverse=True)[:3]),2)
     return dict(metrics=m,equity=[dict(date=d['date'],value=d['equity']) for d in daily],
                 evidence='Yahoo NQ price proxy; $20/point; max8; next-bar fills; complete RTH sessions. '
