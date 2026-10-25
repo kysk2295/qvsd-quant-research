@@ -1,0 +1,24 @@
+{
+  "state": "blocked_policy_and_simulation_module",
+  "observed_health": {"Orders.armed": false, "Orders.endpoints": false, "StrategyRun.canStart": true, "anyLive": false},
+  "approval_review": "Read-only GET /orders/status proposed through exec_command was rejected: blocked by policy. Request did not execute. No alternate access attempted.",
+  "strategy_limitation": "Installed CodexRsiPullback accepts only Historical Backtest account; unchanged strategy cannot submit Playback orders.",
+  "replay_plan": {
+    "date": "2026-10-20",
+    "window_eastern": ["09:29:00", "16:05:00"],
+    "budget_sessions": 1,
+    "quantity": 1,
+    "purpose": "Execution diagnosis only on an already observed date; not independent performance evidence",
+    "compare": ["signals", "orders", "entry fills", "exit fills", "unmatched or duplicate orders"],
+    "timestamps": "Normalize Backtest Asia/Seoul and Playback execution America/Chicago to UTC; transport uses America/New_York"
+  },
+  "restart_conditions": [
+    "Supported simulation control permitted by approval policy; no bypass",
+    "User opt-in for the existing Simulator/Playback-only order module",
+    "Reviewed Playback-only RSI implementation retaining rules and historical indicator warmup without historical orders",
+    "Observed Playback-provider account; no live connection, positions or working orders at start",
+    "Guarded dry-run and confirmed bounded execution; pause and verify flat at end"
+  ],
+  "actual_replay_strategy_runs": 0,
+  "next_action": "Finish independent fixed-parameter historical extension; retain this precise Replay blocker"
+}

@@ -9,13 +9,16 @@ ny=ZoneInfo('America/New_York')
 rows=[]
 for file in sorted((root/'data/runner/nt-import').glob('*/NQ DEC26.Last.txt')):
     sessions=defaultdict(lambda: defaultdict(int)); previous=''; count=volume=0
+    previous_minute=None
     for line in file.open(encoding='ascii'):
         stamp,price,size=line.strip().split(';')
         assert stamp>=previous;previous=stamp
         price=float(price);size=int(size)
         assert price>0 and size>0 and abs(price*4-round(price*4))<1e-8
-        local=datetime.strptime(stamp[:15],'%Y%m%d %H%M%S').replace(tzinfo=timezone.utc).astimezone(ny)
-        minute=local.hour*60+local.minute
+        if stamp[:13]!=previous_minute:
+            previous_minute=stamp[:13]
+            local=datetime.strptime(previous_minute,'%Y%m%d %H%M').replace(tzinfo=timezone.utc).astimezone(ny)
+            minute=local.hour*60+local.minute
         if 570<=minute<960:sessions[str(local.date())][minute]+=size
         count+=1;volume+=size
     rows.append(dict(file=str(file.relative_to(root)),sha256=hashlib.sha256(file.read_bytes()).hexdigest(),

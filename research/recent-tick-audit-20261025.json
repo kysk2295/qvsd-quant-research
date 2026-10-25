@@ -1,5 +1,68 @@
 [
   {
+    "file": "data\\runner\\nt-import\\20261006\\NQ DEC26.Last.txt",
+    "sha256": "be0123e3913c8318d18ac7bad6d569fa20d13e2944b098d8d3766af68370d548",
+    "ticks": 436946,
+    "volume": 468690,
+    "sessions": [
+      {
+        "date": "2026-10-06",
+        "minutes": 390,
+        "rthVolume": 348398,
+        "missingMinutes": []
+      }
+    ]
+  },
+  {
+    "file": "data\\runner\\nt-import\\20261007\\NQ DEC26.Last.txt",
+    "sha256": "d2bb16a1bf3f3018b5879847122765ce3eea3df3cef3e88a1ca74681a33ee473",
+    "ticks": 467876,
+    "volume": 504241,
+    "sessions": [
+      {
+        "date": "2026-10-07",
+        "minutes": 390,
+        "rthVolume": 361026,
+        "missingMinutes": []
+      }
+    ]
+  },
+  {
+    "file": "data\\runner\\nt-import\\20261008\\NQ DEC26.Last.txt",
+    "sha256": "09186c096b4880aa10f6f04706d4978701b43676a9d5f41f8584cc7e804ad124",
+    "ticks": 636076,
+    "volume": 692151,
+    "sessions": [
+      {
+        "date": "2026-10-08",
+        "minutes": 390,
+        "rthVolume": 530361,
+        "missingMinutes": []
+      }
+    ]
+  },
+  {
+    "file": "data\\runner\\nt-import\\20261009\\NQ DEC26.Last.txt",
+    "sha256": "32487d31691fd43d361215df7e5b6383e9966cb52c20b99876b4b9bf4e2ae1e5",
+    "ticks": 400643,
+    "volume": 434359,
+    "sessions": [
+      {
+        "date": "2026-10-09",
+        "minutes": 390,
+        "rthVolume": 332388,
+        "missingMinutes": []
+      }
+    ]
+  },
+  {
+    "file": "data\\runner\\nt-import\\20261011\\NQ DEC26.Last.txt",
+    "sha256": "89008a4c78212ebeaf950e27b020da4e9123e7abd5a1d37b89122696f3d00149",
+    "ticks": 46073,
+    "volume": 50081,
+    "sessions": []
+  },
+  {
     "file": "data\\runner\\nt-import\\20261012\\NQ DEC26.Last.txt",
     "sha256": "977cd6c50cc3be7535c4e785c68514abbe94ca7a50b8a6a012f3ed98876580cb",
     "ticks": 434499,
@@ -68,6 +131,13 @@
         "missingMinutes": []
       }
     ]
+  },
+  {
+    "file": "data\\runner\\nt-import\\20261018\\NQ DEC26.Last.txt",
+    "sha256": "235e60a0ddc56f7f49a89eee520e5c111386b38e59791f1860ffbdae3cb09887",
+    "ticks": 60610,
+    "volume": 66682,
+    "sessions": []
   },
   {
     "file": "data\\runner\\nt-import\\20261019\\NQ DEC26.Last.txt",

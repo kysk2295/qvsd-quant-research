@@ -47,7 +47,7 @@ class RsiCycle:
         # NinjaTrader may prefetch bars before the requested date. Snapshot all local instrument
         # files, rather than omitting earlier prefetch files from the pre-execution fingerprint.
         start=self.manifest['data_requirements'].get('recent_request_from','2026-10-11') if recent else '2026-09-28'
-        end='2026-10-23' if recent else '2026-10-07'
+        end=self.manifest['data_requirements'].get('recent_request_to','2026-10-23') if recent else '2026-10-07'
         files=sorted(p for kind in (('minute','tick') if recent else ('minute',)) for p in (db/kind/'NQ 12-26').glob('*.ncd'))
         assert files;dh=dataset_hash(files)
         req=dict(strategy=self.strategy,instrument='NQ DEC26',barsPeriod={'type':'Minute','value':5},
