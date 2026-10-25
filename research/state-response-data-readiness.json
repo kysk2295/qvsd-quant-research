@@ -1,0 +1,47 @@
+{
+  "id": "nq-state-response-data-readiness-20261025",
+  "role": "Read-only inventory after the two registered hypothesis results; no new price or response analysis",
+  "status": "no_additional_passed_contiguous_same_source_sessions_found",
+  "current_raw_last_dates": "2026-10-02 through 2026-10-22:15 audited RTH sessions, already consumed development data",
+  "inventory": [
+    {
+      "dates": "2026-09-23 through 2026-09-25",
+      "files": "NRD, L1 Parquet and Last TXT",
+      "prior_quality": "390 RTH minutes and integrity passed",
+      "limitation": "Separated from current rawLast block by missing Sep28-Oct1 raw data; already used by NR7 historical research, not untouched validation"
+    },
+    {
+      "dates": "2026-09-28 through 2026-10-01",
+      "files": "Existing native minute audit only",
+      "limitation": "No matching rawLast cross-check; not equivalent source coverage for extending the current study"
+    },
+    {
+      "dates": "2026-10-11 and 2026-10-18",
+      "files": "Replay/Last files present",
+      "limitation": "Prior tick audit has no RTH sessions; does not add evaluation days"
+    },
+    {
+      "dates": "2026-10-23",
+      "files": "NRD present",
+      "limitation": "Existing decoder/header volume and price disagreement unresolved; excluded"
+    }
+  ],
+  "duplicates": "data/runner staging NRD files repeat these dates; data/incoming/replay inventory adds no NQ dates",
+  "evidence": [
+    "research/nr7-history-extension-coverage.json",
+    "research/nr7-history-chunk1-decoded.json",
+    "research/recent-tick-audit-20261025.json",
+    "docs/windows-replay-acquisition-2026-10-25.md"
+  ],
+  "next_data_work": [
+    "Resolve the Oct23 decoder/header disagreement before using that file",
+    "For broader development history, obtain and quality-check a contiguous same-source block; record any prior use",
+    "For a new independent validation, specify a separate untouched sample before looking at its responses",
+    "Preserve the existing Bollinger prospective reservation and its release conditions"
+  ],
+  "actions_performed": "Filename/metadata and existing audit reads only",
+  "new_downloads": 0,
+  "native_calls": 0,
+  "new_outcome_calculations": 0,
+  "scheduled": false
+}
