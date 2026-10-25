@@ -1,0 +1,3318 @@
+{
+  "observedDate": "2026-10-25",
+  "timezone": "Asia/Seoul",
+  "controls": [
+    {
+      "id": 9,
+      "type": "TextBlock",
+      "name": "txtFocusStub",
+      "label": "ffff",
+      "fields": {
+        "Text": "ffff"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 18,
+      "type": "TextBlock",
+      "name": "Caption",
+      "label": "Strategy Analyzer",
+      "fields": {
+        "Text": "Strategy Analyzer"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 21,
+      "type": "TextBlock",
+      "name": "",
+      "label": "Analyzer",
+      "fields": {
+        "Text": "Analyzer"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 24,
+      "type": "TextBlock",
+      "name": "block",
+      "label": "Wq",
+      "fields": {
+        "Text": "Wq"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 26,
+      "type": "TextBlock",
+      "name": "",
+      "label": "Analyzer",
+      "fields": {
+        "Text": "Analyzer"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 28,
+      "type": "TextBlock",
+      "name": "",
+      "label": "Settings",
+      "fields": {
+        "Text": "Settings"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 32,
+      "type": "TextBlock",
+      "name": "displayLabel",
+      "label": "Display",
+      "fields": {
+        "Text": "Display"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 35,
+      "type": "TextBlock",
+      "name": "",
+      "label": "Run",
+      "fields": {
+        "Text": "Run"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 53,
+      "type": "TextBlock",
+      "name": "",
+      "label": "»",
+      "fields": {
+        "Text": "»"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 65,
+      "type": "TextBlock",
+      "name": "",
+      "label": "Trades ($)",
+      "fields": {
+        "Text": "Trades ($)"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 79,
+      "type": "TextBlock",
+      "name": "",
+      "label": "template",
+      "fields": {
+        "Text": "template"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 80,
+      "type": "TextBlock",
+      "name": "",
+      "label": "save",
+      "fields": {
+        "Text": "save"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 81,
+      "type": "TextBlock",
+      "name": "",
+      "label": "load",
+      "fields": {
+        "Text": "load"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 82,
+      "type": "TextBlock",
+      "name": "",
+      "label": "reset",
+      "fields": {
+        "Text": "reset"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 157,
+      "type": "XamDateTimeEditor",
+      "name": "PART_editor",
+      "label": "",
+      "fields": {
+        "Value": "2026-09-28T00:00:00.0000000",
+        "SelectedText": "",
+        "Text": "2026-09-28"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 159,
+      "type": "XamDateTimeEditor",
+      "name": "PART_editor",
+      "label": "",
+      "fields": {
+        "Value": "2026-10-07T00:00:00.0000000",
+        "SelectedText": "",
+        "Text": "2026-10-07"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 189,
+      "type": "CellValuePresenter",
+      "name": "",
+      "label": "",
+      "fields": {
+        "Value": "1"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 190,
+      "type": "CellValuePresenter",
+      "name": "",
+      "label": "NQ DEC26",
+      "fields": {
+        "Value": "NQ DEC26"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 191,
+      "type": "CellValuePresenter",
+      "name": "",
+      "label": "Backtest",
+      "fields": {
+        "Value": "Backtest"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 192,
+      "type": "CellValuePresenter",
+      "name": "",
+      "label": "CodexCloseMomentum",
+      "fields": {
+        "Value": "CodexCloseMomentum"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 193,
+      "type": "CellValuePresenter",
+      "name": "",
+      "label": "Long",
+      "fields": {
+        "Value": "Long"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 194,
+      "type": "CellValuePresenter",
+      "name": "",
+      "label": "1",
+      "fields": {
+        "Value": "1"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 195,
+      "type": "CellValuePresenter",
+      "name": "",
+      "label": "30626.00",
+      "fields": {
+        "Value": "30626.00"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 196,
+      "type": "CellValuePresenter",
+      "name": "",
+      "label": "30614.75",
+      "fields": {
+        "Value": "30614.75"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 197,
+      "type": "CellValuePresenter",
+      "name": "",
+      "label": "2026-09-30 오전 4:31:00",
+      "fields": {
+        "Value": "2026-09-30T04:31:00.0000000"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 198,
+      "type": "CellValuePresenter",
+      "name": "",
+      "label": "2026-09-30 오전 5:01:00",
+      "fields": {
+        "Value": "2026-09-30T05:01:00.0000000"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 199,
+      "type": "CellValuePresenter",
+      "name": "",
+      "label": "L",
+      "fields": {
+        "Value": "L"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 200,
+      "type": "CellValuePresenter",
+      "name": "",
+      "label": "TimeExit",
+      "fields": {
+        "Value": "TimeExit"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 201,
+      "type": "CellValuePresenter",
+      "name": "",
+      "label": "",
+      "fields": {},
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 202,
+      "type": "CellValuePresenter",
+      "name": "",
+      "label": "",
+      "fields": {},
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 203,
+      "type": "CellValuePresenter",
+      "name": "",
+      "label": "$0.00",
+      "fields": {
+        "Value": "$0.00"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 204,
+      "type": "CellValuePresenter",
+      "name": "",
+      "label": "$0.00",
+      "fields": {
+        "Value": "$0.00"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 205,
+      "type": "CellValuePresenter",
+      "name": "",
+      "label": "$0.00",
+      "fields": {
+        "Value": "$0.00"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 206,
+      "type": "CellValuePresenter",
+      "name": "",
+      "label": "$0.00",
+      "fields": {
+        "Value": "$0.00"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 207,
+      "type": "CellValuePresenter",
+      "name": "",
+      "label": "$0.00",
+      "fields": {
+        "Value": "$0.00"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 208,
+      "type": "CellValuePresenter",
+      "name": "",
+      "label": "",
+      "fields": {},
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 209,
+      "type": "CellValuePresenter",
+      "name": "",
+      "label": "",
+      "fields": {},
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 210,
+      "type": "CellValuePresenter",
+      "name": "",
+      "label": "",
+      "fields": {},
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 211,
+      "type": "CellValuePresenter",
+      "name": "",
+      "label": "",
+      "fields": {
+        "Value": "31"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 212,
+      "type": "CellValuePresenter",
+      "name": "",
+      "label": "",
+      "fields": {
+        "Value": "2"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 213,
+      "type": "CellValuePresenter",
+      "name": "",
+      "label": "NQ DEC26",
+      "fields": {
+        "Value": "NQ DEC26"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 214,
+      "type": "CellValuePresenter",
+      "name": "",
+      "label": "Backtest",
+      "fields": {
+        "Value": "Backtest"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 215,
+      "type": "CellValuePresenter",
+      "name": "",
+      "label": "CodexCloseMomentum",
+      "fields": {
+        "Value": "CodexCloseMomentum"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 216,
+      "type": "CellValuePresenter",
+      "name": "",
+      "label": "Long",
+      "fields": {
+        "Value": "Long"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 217,
+      "type": "CellValuePresenter",
+      "name": "",
+      "label": "1",
+      "fields": {
+        "Value": "1"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 218,
+      "type": "CellValuePresenter",
+      "name": "",
+      "label": "30833.75",
+      "fields": {
+        "Value": "30833.75"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 219,
+      "type": "CellValuePresenter",
+      "name": "",
+      "label": "30692.25",
+      "fields": {
+        "Value": "30692.25"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 220,
+      "type": "CellValuePresenter",
+      "name": "",
+      "label": "2026-10-01 오전 4:31:00",
+      "fields": {
+        "Value": "2026-10-01T04:31:00.0000000"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 221,
+      "type": "CellValuePresenter",
+      "name": "",
+      "label": "2026-10-01 오전 5:01:00",
+      "fields": {
+        "Value": "2026-10-01T05:01:00.0000000"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 222,
+      "type": "CellValuePresenter",
+      "name": "",
+      "label": "L",
+      "fields": {
+        "Value": "L"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 223,
+      "type": "CellValuePresenter",
+      "name": "",
+      "label": "TimeExit",
+      "fields": {
+        "Value": "TimeExit"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 224,
+      "type": "CellValuePresenter",
+      "name": "",
+      "label": "",
+      "fields": {},
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 225,
+      "type": "CellValuePresenter",
+      "name": "",
+      "label": "",
+      "fields": {},
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 226,
+      "type": "CellValuePresenter",
+      "name": "",
+      "label": "$0.00",
+      "fields": {
+        "Value": "$0.00"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 227,
+      "type": "CellValuePresenter",
+      "name": "",
+      "label": "$0.00",
+      "fields": {
+        "Value": "$0.00"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 228,
+      "type": "CellValuePresenter",
+      "name": "",
+      "label": "$0.00",
+      "fields": {
+        "Value": "$0.00"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 229,
+      "type": "CellValuePresenter",
+      "name": "",
+      "label": "$0.00",
+      "fields": {
+        "Value": "$0.00"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 230,
+      "type": "CellValuePresenter",
+      "name": "",
+      "label": "$0.00",
+      "fields": {
+        "Value": "$0.00"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 231,
+      "type": "CellValuePresenter",
+      "name": "",
+      "label": "",
+      "fields": {},
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 232,
+      "type": "CellValuePresenter",
+      "name": "",
+      "label": "",
+      "fields": {},
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 233,
+      "type": "CellValuePresenter",
+      "name": "",
+      "label": "",
+      "fields": {},
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 234,
+      "type": "CellValuePresenter",
+      "name": "",
+      "label": "",
+      "fields": {
+        "Value": "31"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 235,
+      "type": "CellValuePresenter",
+      "name": "",
+      "label": "",
+      "fields": {
+        "Value": "3"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 236,
+      "type": "CellValuePresenter",
+      "name": "",
+      "label": "NQ DEC26",
+      "fields": {
+        "Value": "NQ DEC26"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 237,
+      "type": "CellValuePresenter",
+      "name": "",
+      "label": "Backtest",
+      "fields": {
+        "Value": "Backtest"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 238,
+      "type": "CellValuePresenter",
+      "name": "",
+      "label": "CodexCloseMomentum",
+      "fields": {
+        "Value": "CodexCloseMomentum"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 239,
+      "type": "CellValuePresenter",
+      "name": "",
+      "label": "Long",
+      "fields": {
+        "Value": "Long"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 240,
+      "type": "CellValuePresenter",
+      "name": "",
+      "label": "1",
+      "fields": {
+        "Value": "1"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 241,
+      "type": "CellValuePresenter",
+      "name": "",
+      "label": "30804.75",
+      "fields": {
+        "Value": "30804.75"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 242,
+      "type": "CellValuePresenter",
+      "name": "",
+      "label": "30772.50",
+      "fields": {
+        "Value": "30772.50"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 243,
+      "type": "CellValuePresenter",
+      "name": "",
+      "label": "2026-10-02 오전 4:31:00",
+      "fields": {
+        "Value": "2026-10-02T04:31:00.0000000"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 244,
+      "type": "CellValuePresenter",
+      "name": "",
+      "label": "2026-10-02 오전 5:01:00",
+      "fields": {
+        "Value": "2026-10-02T05:01:00.0000000"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 245,
+      "type": "CellValuePresenter",
+      "name": "",
+      "label": "L",
+      "fields": {
+        "Value": "L"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 246,
+      "type": "CellValuePresenter",
+      "name": "",
+      "label": "TimeExit",
+      "fields": {
+        "Value": "TimeExit"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 247,
+      "type": "CellValuePresenter",
+      "name": "",
+      "label": "",
+      "fields": {},
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 248,
+      "type": "CellValuePresenter",
+      "name": "",
+      "label": "",
+      "fields": {},
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 249,
+      "type": "CellValuePresenter",
+      "name": "",
+      "label": "$0.00",
+      "fields": {
+        "Value": "$0.00"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 250,
+      "type": "CellValuePresenter",
+      "name": "",
+      "label": "$0.00",
+      "fields": {
+        "Value": "$0.00"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 251,
+      "type": "CellValuePresenter",
+      "name": "",
+      "label": "$0.00",
+      "fields": {
+        "Value": "$0.00"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 252,
+      "type": "CellValuePresenter",
+      "name": "",
+      "label": "$0.00",
+      "fields": {
+        "Value": "$0.00"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 253,
+      "type": "CellValuePresenter",
+      "name": "",
+      "label": "$0.00",
+      "fields": {
+        "Value": "$0.00"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 254,
+      "type": "CellValuePresenter",
+      "name": "",
+      "label": "",
+      "fields": {},
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 255,
+      "type": "CellValuePresenter",
+      "name": "",
+      "label": "",
+      "fields": {},
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 256,
+      "type": "CellValuePresenter",
+      "name": "",
+      "label": "",
+      "fields": {},
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 257,
+      "type": "CellValuePresenter",
+      "name": "",
+      "label": "",
+      "fields": {
+        "Value": "31"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 258,
+      "type": "CellValuePresenter",
+      "name": "",
+      "label": "",
+      "fields": {
+        "Value": "4"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 259,
+      "type": "CellValuePresenter",
+      "name": "",
+      "label": "NQ DEC26",
+      "fields": {
+        "Value": "NQ DEC26"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 260,
+      "type": "CellValuePresenter",
+      "name": "",
+      "label": "Backtest",
+      "fields": {
+        "Value": "Backtest"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 261,
+      "type": "CellValuePresenter",
+      "name": "",
+      "label": "CodexCloseMomentum",
+      "fields": {
+        "Value": "CodexCloseMomentum"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 262,
+      "type": "CellValuePresenter",
+      "name": "",
+      "label": "Long",
+      "fields": {
+        "Value": "Long"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 263,
+      "type": "CellValuePresenter",
+      "name": "",
+      "label": "1",
+      "fields": {
+        "Value": "1"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 264,
+      "type": "CellValuePresenter",
+      "name": "",
+      "label": "31051.00",
+      "fields": {
+        "Value": "31051.00"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 265,
+      "type": "CellValuePresenter",
+      "name": "",
+      "label": "31067.50",
+      "fields": {
+        "Value": "31067.50"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 266,
+      "type": "CellValuePresenter",
+      "name": "",
+      "label": "2026-10-03 오전 4:31:00",
+      "fields": {
+        "Value": "2026-10-03T04:31:00.0000000"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 267,
+      "type": "CellValuePresenter",
+      "name": "",
+      "label": "2026-10-03 오전 5:01:00",
+      "fields": {
+        "Value": "2026-10-03T05:01:00.0000000"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 268,
+      "type": "CellValuePresenter",
+      "name": "",
+      "label": "L",
+      "fields": {
+        "Value": "L"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 269,
+      "type": "CellValuePresenter",
+      "name": "",
+      "label": "TimeExit",
+      "fields": {
+        "Value": "TimeExit"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 270,
+      "type": "CellValuePresenter",
+      "name": "",
+      "label": "",
+      "fields": {},
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 271,
+      "type": "CellValuePresenter",
+      "name": "",
+      "label": "",
+      "fields": {},
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 272,
+      "type": "CellValuePresenter",
+      "name": "",
+      "label": "$0.00",
+      "fields": {
+        "Value": "$0.00"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 273,
+      "type": "CellValuePresenter",
+      "name": "",
+      "label": "$0.00",
+      "fields": {
+        "Value": "$0.00"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 274,
+      "type": "CellValuePresenter",
+      "name": "",
+      "label": "$0.00",
+      "fields": {
+        "Value": "$0.00"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 275,
+      "type": "CellValuePresenter",
+      "name": "",
+      "label": "$0.00",
+      "fields": {
+        "Value": "$0.00"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 276,
+      "type": "CellValuePresenter",
+      "name": "",
+      "label": "$0.00",
+      "fields": {
+        "Value": "$0.00"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 277,
+      "type": "CellValuePresenter",
+      "name": "",
+      "label": "",
+      "fields": {},
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 278,
+      "type": "CellValuePresenter",
+      "name": "",
+      "label": "",
+      "fields": {},
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 279,
+      "type": "CellValuePresenter",
+      "name": "",
+      "label": "",
+      "fields": {},
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 280,
+      "type": "CellValuePresenter",
+      "name": "",
+      "label": "",
+      "fields": {
+        "Value": "31"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 281,
+      "type": "CellValuePresenter",
+      "name": "",
+      "label": "",
+      "fields": {
+        "Value": "5"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 282,
+      "type": "CellValuePresenter",
+      "name": "",
+      "label": "NQ DEC26",
+      "fields": {
+        "Value": "NQ DEC26"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 283,
+      "type": "CellValuePresenter",
+      "name": "",
+      "label": "Backtest",
+      "fields": {
+        "Value": "Backtest"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 284,
+      "type": "CellValuePresenter",
+      "name": "",
+      "label": "CodexCloseMomentum",
+      "fields": {
+        "Value": "CodexCloseMomentum"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 285,
+      "type": "CellValuePresenter",
+      "name": "",
+      "label": "Long",
+      "fields": {
+        "Value": "Long"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 286,
+      "type": "CellValuePresenter",
+      "name": "",
+      "label": "1",
+      "fields": {
+        "Value": "1"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 287,
+      "type": "CellValuePresenter",
+      "name": "",
+      "label": "31354.75",
+      "fields": {
+        "Value": "31354.75"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 288,
+      "type": "CellValuePresenter",
+      "name": "",
+      "label": "31336.00",
+      "fields": {
+        "Value": "31336.00"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 289,
+      "type": "CellValuePresenter",
+      "name": "",
+      "label": "2026-10-06 오전 4:31:00",
+      "fields": {
+        "Value": "2026-10-06T04:31:00.0000000"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 290,
+      "type": "CellValuePresenter",
+      "name": "",
+      "label": "2026-10-06 오전 5:01:00",
+      "fields": {
+        "Value": "2026-10-06T05:01:00.0000000"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 291,
+      "type": "CellValuePresenter",
+      "name": "",
+      "label": "L",
+      "fields": {
+        "Value": "L"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 292,
+      "type": "CellValuePresenter",
+      "name": "",
+      "label": "TimeExit",
+      "fields": {
+        "Value": "TimeExit"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 293,
+      "type": "CellValuePresenter",
+      "name": "",
+      "label": "",
+      "fields": {},
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 294,
+      "type": "CellValuePresenter",
+      "name": "",
+      "label": "",
+      "fields": {},
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 295,
+      "type": "CellValuePresenter",
+      "name": "",
+      "label": "$0.00",
+      "fields": {
+        "Value": "$0.00"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 296,
+      "type": "CellValuePresenter",
+      "name": "",
+      "label": "$0.00",
+      "fields": {
+        "Value": "$0.00"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 297,
+      "type": "CellValuePresenter",
+      "name": "",
+      "label": "$0.00",
+      "fields": {
+        "Value": "$0.00"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 298,
+      "type": "CellValuePresenter",
+      "name": "",
+      "label": "$0.00",
+      "fields": {
+        "Value": "$0.00"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 299,
+      "type": "CellValuePresenter",
+      "name": "",
+      "label": "$0.00",
+      "fields": {
+        "Value": "$0.00"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 300,
+      "type": "CellValuePresenter",
+      "name": "",
+      "label": "",
+      "fields": {},
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 301,
+      "type": "CellValuePresenter",
+      "name": "",
+      "label": "",
+      "fields": {},
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 302,
+      "type": "CellValuePresenter",
+      "name": "",
+      "label": "",
+      "fields": {},
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 303,
+      "type": "CellValuePresenter",
+      "name": "",
+      "label": "",
+      "fields": {
+        "Value": "31"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 304,
+      "type": "CellValuePresenter",
+      "name": "",
+      "label": "",
+      "fields": {
+        "Value": "6"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 305,
+      "type": "CellValuePresenter",
+      "name": "",
+      "label": "NQ DEC26",
+      "fields": {
+        "Value": "NQ DEC26"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 306,
+      "type": "CellValuePresenter",
+      "name": "",
+      "label": "Backtest",
+      "fields": {
+        "Value": "Backtest"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 307,
+      "type": "CellValuePresenter",
+      "name": "",
+      "label": "CodexCloseMomentum",
+      "fields": {
+        "Value": "CodexCloseMomentum"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 308,
+      "type": "CellValuePresenter",
+      "name": "",
+      "label": "Long",
+      "fields": {
+        "Value": "Long"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 309,
+      "type": "CellValuePresenter",
+      "name": "",
+      "label": "1",
+      "fields": {
+        "Value": "1"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 310,
+      "type": "CellValuePresenter",
+      "name": "",
+      "label": "31525.75",
+      "fields": {
+        "Value": "31525.75"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 311,
+      "type": "CellValuePresenter",
+      "name": "",
+      "label": "31480.00",
+      "fields": {
+        "Value": "31480.00"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 312,
+      "type": "CellValuePresenter",
+      "name": "",
+      "label": "2026-10-07 오전 4:31:00",
+      "fields": {
+        "Value": "2026-10-07T04:31:00.0000000"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 313,
+      "type": "CellValuePresenter",
+      "name": "",
+      "label": "2026-10-07 오전 5:01:00",
+      "fields": {
+        "Value": "2026-10-07T05:01:00.0000000"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 314,
+      "type": "CellValuePresenter",
+      "name": "",
+      "label": "L",
+      "fields": {
+        "Value": "L"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 315,
+      "type": "CellValuePresenter",
+      "name": "",
+      "label": "TimeExit",
+      "fields": {
+        "Value": "TimeExit"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 316,
+      "type": "CellValuePresenter",
+      "name": "",
+      "label": "",
+      "fields": {},
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 317,
+      "type": "CellValuePresenter",
+      "name": "",
+      "label": "",
+      "fields": {},
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 318,
+      "type": "CellValuePresenter",
+      "name": "",
+      "label": "$0.00",
+      "fields": {
+        "Value": "$0.00"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 319,
+      "type": "CellValuePresenter",
+      "name": "",
+      "label": "$0.00",
+      "fields": {
+        "Value": "$0.00"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 320,
+      "type": "CellValuePresenter",
+      "name": "",
+      "label": "$0.00",
+      "fields": {
+        "Value": "$0.00"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 321,
+      "type": "CellValuePresenter",
+      "name": "",
+      "label": "$0.00",
+      "fields": {
+        "Value": "$0.00"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 322,
+      "type": "CellValuePresenter",
+      "name": "",
+      "label": "$0.00",
+      "fields": {
+        "Value": "$0.00"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 323,
+      "type": "CellValuePresenter",
+      "name": "",
+      "label": "",
+      "fields": {},
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 324,
+      "type": "CellValuePresenter",
+      "name": "",
+      "label": "",
+      "fields": {},
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 325,
+      "type": "CellValuePresenter",
+      "name": "",
+      "label": "",
+      "fields": {},
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 326,
+      "type": "CellValuePresenter",
+      "name": "",
+      "label": "",
+      "fields": {
+        "Value": "31"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 342,
+      "type": "TextBlock",
+      "name": "",
+      "label": "Minute",
+      "fields": {
+        "Text": "Minute"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 344,
+      "type": "TextBlock",
+      "name": "icon",
+      "label": "",
+      "fields": {
+        "Text": ""
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 346,
+      "type": "TextBlock",
+      "name": "icon",
+      "label": "",
+      "fields": {
+        "Text": ""
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 354,
+      "type": "TextBlock",
+      "name": "Text",
+      "label": "1",
+      "fields": {
+        "Text": "1"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 355,
+      "type": "TextBlock",
+      "name": "Text",
+      "label": "NQ DEC26",
+      "fields": {
+        "Text": "NQ DEC26"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 356,
+      "type": "TextBlock",
+      "name": "Text",
+      "label": "Backtest",
+      "fields": {
+        "Text": "Backtest"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 357,
+      "type": "TextBlock",
+      "name": "Text",
+      "label": "CodexCloseMomentum",
+      "fields": {
+        "Text": "CodexCloseMomentum"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 358,
+      "type": "TextBlock",
+      "name": "Text",
+      "label": "Long",
+      "fields": {
+        "Text": "Long"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 359,
+      "type": "TextBlock",
+      "name": "Text",
+      "label": "1",
+      "fields": {
+        "Text": "1"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 360,
+      "type": "TextBlock",
+      "name": "Text",
+      "label": "30626.00",
+      "fields": {
+        "Text": "30626.00"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 361,
+      "type": "TextBlock",
+      "name": "Text",
+      "label": "30614.75",
+      "fields": {
+        "Text": "30614.75"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 362,
+      "type": "TextBlock",
+      "name": "Text",
+      "label": "L",
+      "fields": {
+        "Text": "L"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 363,
+      "type": "TextBlock",
+      "name": "Text",
+      "label": "TimeExit",
+      "fields": {
+        "Text": "TimeExit"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 364,
+      "type": "TextBlock",
+      "name": "Text",
+      "label": "-$225.00",
+      "fields": {
+        "Text": "-$225.00"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 365,
+      "type": "TextBlock",
+      "name": "Text",
+      "label": "-$225.00",
+      "fields": {
+        "Text": "-$225.00"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 366,
+      "type": "TextBlock",
+      "name": "Text",
+      "label": "$0.00",
+      "fields": {
+        "Text": "$0.00"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 367,
+      "type": "TextBlock",
+      "name": "Text",
+      "label": "$0.00",
+      "fields": {
+        "Text": "$0.00"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 368,
+      "type": "TextBlock",
+      "name": "Text",
+      "label": "$0.00",
+      "fields": {
+        "Text": "$0.00"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 369,
+      "type": "TextBlock",
+      "name": "Text",
+      "label": "$0.00",
+      "fields": {
+        "Text": "$0.00"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 370,
+      "type": "TextBlock",
+      "name": "Text",
+      "label": "$0.00",
+      "fields": {
+        "Text": "$0.00"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 371,
+      "type": "TextBlock",
+      "name": "Text",
+      "label": "$675.00",
+      "fields": {
+        "Text": "$675.00"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 372,
+      "type": "TextBlock",
+      "name": "Text",
+      "label": "$440.00",
+      "fields": {
+        "Text": "$440.00"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 373,
+      "type": "TextBlock",
+      "name": "Text",
+      "label": "$665.00",
+      "fields": {
+        "Text": "$665.00"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 374,
+      "type": "TextBlock",
+      "name": "Text",
+      "label": "31",
+      "fields": {
+        "Text": "31"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 375,
+      "type": "TextBlock",
+      "name": "Text",
+      "label": "2",
+      "fields": {
+        "Text": "2"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 376,
+      "type": "TextBlock",
+      "name": "Text",
+      "label": "NQ DEC26",
+      "fields": {
+        "Text": "NQ DEC26"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 377,
+      "type": "TextBlock",
+      "name": "Text",
+      "label": "Backtest",
+      "fields": {
+        "Text": "Backtest"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 378,
+      "type": "TextBlock",
+      "name": "Text",
+      "label": "CodexCloseMomentum",
+      "fields": {
+        "Text": "CodexCloseMomentum"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 379,
+      "type": "TextBlock",
+      "name": "Text",
+      "label": "Long",
+      "fields": {
+        "Text": "Long"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 380,
+      "type": "TextBlock",
+      "name": "Text",
+      "label": "1",
+      "fields": {
+        "Text": "1"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 381,
+      "type": "TextBlock",
+      "name": "Text",
+      "label": "30833.75",
+      "fields": {
+        "Text": "30833.75"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 382,
+      "type": "TextBlock",
+      "name": "Text",
+      "label": "30692.25",
+      "fields": {
+        "Text": "30692.25"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 383,
+      "type": "TextBlock",
+      "name": "Text",
+      "label": "L",
+      "fields": {
+        "Text": "L"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 384,
+      "type": "TextBlock",
+      "name": "Text",
+      "label": "TimeExit",
+      "fields": {
+        "Text": "TimeExit"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 385,
+      "type": "TextBlock",
+      "name": "Text",
+      "label": "-$2,830.00",
+      "fields": {
+        "Text": "-$2,830.00"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 386,
+      "type": "TextBlock",
+      "name": "Text",
+      "label": "-$3,055.00",
+      "fields": {
+        "Text": "-$3,055.00"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 387,
+      "type": "TextBlock",
+      "name": "Text",
+      "label": "$0.00",
+      "fields": {
+        "Text": "$0.00"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 388,
+      "type": "TextBlock",
+      "name": "Text",
+      "label": "$0.00",
+      "fields": {
+        "Text": "$0.00"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 389,
+      "type": "TextBlock",
+      "name": "Text",
+      "label": "$0.00",
+      "fields": {
+        "Text": "$0.00"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 390,
+      "type": "TextBlock",
+      "name": "Text",
+      "label": "$0.00",
+      "fields": {
+        "Text": "$0.00"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 391,
+      "type": "TextBlock",
+      "name": "Text",
+      "label": "$0.00",
+      "fields": {
+        "Text": "$0.00"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 392,
+      "type": "TextBlock",
+      "name": "Text",
+      "label": "$3,060.00",
+      "fields": {
+        "Text": "$3,060.00"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 393,
+      "type": "TextBlock",
+      "name": "Text",
+      "label": "$490.00",
+      "fields": {
+        "Text": "$490.00"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 394,
+      "type": "TextBlock",
+      "name": "Text",
+      "label": "$3,320.00",
+      "fields": {
+        "Text": "$3,320.00"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 395,
+      "type": "TextBlock",
+      "name": "Text",
+      "label": "31",
+      "fields": {
+        "Text": "31"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 396,
+      "type": "TextBlock",
+      "name": "Text",
+      "label": "3",
+      "fields": {
+        "Text": "3"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 397,
+      "type": "TextBlock",
+      "name": "Text",
+      "label": "NQ DEC26",
+      "fields": {
+        "Text": "NQ DEC26"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 398,
+      "type": "TextBlock",
+      "name": "Text",
+      "label": "Backtest",
+      "fields": {
+        "Text": "Backtest"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 399,
+      "type": "TextBlock",
+      "name": "Text",
+      "label": "CodexCloseMomentum",
+      "fields": {
+        "Text": "CodexCloseMomentum"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 400,
+      "type": "TextBlock",
+      "name": "Text",
+      "label": "Long",
+      "fields": {
+        "Text": "Long"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 401,
+      "type": "TextBlock",
+      "name": "Text",
+      "label": "1",
+      "fields": {
+        "Text": "1"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 402,
+      "type": "TextBlock",
+      "name": "Text",
+      "label": "30804.75",
+      "fields": {
+        "Text": "30804.75"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 403,
+      "type": "TextBlock",
+      "name": "Text",
+      "label": "30772.50",
+      "fields": {
+        "Text": "30772.50"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 404,
+      "type": "TextBlock",
+      "name": "Text",
+      "label": "L",
+      "fields": {
+        "Text": "L"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 405,
+      "type": "TextBlock",
+      "name": "Text",
+      "label": "TimeExit",
+      "fields": {
+        "Text": "TimeExit"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 406,
+      "type": "TextBlock",
+      "name": "Text",
+      "label": "-$645.00",
+      "fields": {
+        "Text": "-$645.00"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 407,
+      "type": "TextBlock",
+      "name": "Text",
+      "label": "-$3,700.00",
+      "fields": {
+        "Text": "-$3,700.00"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 408,
+      "type": "TextBlock",
+      "name": "Text",
+      "label": "$0.00",
+      "fields": {
+        "Text": "$0.00"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 409,
+      "type": "TextBlock",
+      "name": "Text",
+      "label": "$0.00",
+      "fields": {
+        "Text": "$0.00"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 410,
+      "type": "TextBlock",
+      "name": "Text",
+      "label": "$0.00",
+      "fields": {
+        "Text": "$0.00"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 411,
+      "type": "TextBlock",
+      "name": "Text",
+      "label": "$0.00",
+      "fields": {
+        "Text": "$0.00"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 412,
+      "type": "TextBlock",
+      "name": "Text",
+      "label": "$0.00",
+      "fields": {
+        "Text": "$0.00"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 413,
+      "type": "TextBlock",
+      "name": "Text",
+      "label": "$1,140.00",
+      "fields": {
+        "Text": "$1,140.00"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 414,
+      "type": "TextBlock",
+      "name": "Text",
+      "label": "$1,035.00",
+      "fields": {
+        "Text": "$1,035.00"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 415,
+      "type": "TextBlock",
+      "name": "Text",
+      "label": "$1,680.00",
+      "fields": {
+        "Text": "$1,680.00"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 416,
+      "type": "TextBlock",
+      "name": "Text",
+      "label": "31",
+      "fields": {
+        "Text": "31"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 417,
+      "type": "TextBlock",
+      "name": "Text",
+      "label": "4",
+      "fields": {
+        "Text": "4"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 418,
+      "type": "TextBlock",
+      "name": "Text",
+      "label": "NQ DEC26",
+      "fields": {
+        "Text": "NQ DEC26"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 419,
+      "type": "TextBlock",
+      "name": "Text",
+      "label": "Backtest",
+      "fields": {
+        "Text": "Backtest"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 420,
+      "type": "TextBlock",
+      "name": "Text",
+      "label": "CodexCloseMomentum",
+      "fields": {
+        "Text": "CodexCloseMomentum"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 421,
+      "type": "TextBlock",
+      "name": "Text",
+      "label": "Long",
+      "fields": {
+        "Text": "Long"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 422,
+      "type": "TextBlock",
+      "name": "Text",
+      "label": "1",
+      "fields": {
+        "Text": "1"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 423,
+      "type": "TextBlock",
+      "name": "Text",
+      "label": "31051.00",
+      "fields": {
+        "Text": "31051.00"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 424,
+      "type": "TextBlock",
+      "name": "Text",
+      "label": "31067.50",
+      "fields": {
+        "Text": "31067.50"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 425,
+      "type": "TextBlock",
+      "name": "Text",
+      "label": "L",
+      "fields": {
+        "Text": "L"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 426,
+      "type": "TextBlock",
+      "name": "Text",
+      "label": "TimeExit",
+      "fields": {
+        "Text": "TimeExit"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 427,
+      "type": "TextBlock",
+      "name": "Text",
+      "label": "$330.00",
+      "fields": {
+        "Text": "$330.00"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 428,
+      "type": "TextBlock",
+      "name": "Text",
+      "label": "-$3,370.00",
+      "fields": {
+        "Text": "-$3,370.00"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 429,
+      "type": "TextBlock",
+      "name": "Text",
+      "label": "$0.00",
+      "fields": {
+        "Text": "$0.00"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 430,
+      "type": "TextBlock",
+      "name": "Text",
+      "label": "$0.00",
+      "fields": {
+        "Text": "$0.00"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 431,
+      "type": "TextBlock",
+      "name": "Text",
+      "label": "$0.00",
+      "fields": {
+        "Text": "$0.00"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 432,
+      "type": "TextBlock",
+      "name": "Text",
+      "label": "$0.00",
+      "fields": {
+        "Text": "$0.00"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 433,
+      "type": "TextBlock",
+      "name": "Text",
+      "label": "$0.00",
+      "fields": {
+        "Text": "$0.00"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 434,
+      "type": "TextBlock",
+      "name": "Text",
+      "label": "$230.00",
+      "fields": {
+        "Text": "$230.00"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 435,
+      "type": "TextBlock",
+      "name": "Text",
+      "label": "$795.00",
+      "fields": {
+        "Text": "$795.00"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 436,
+      "type": "TextBlock",
+      "name": "Text",
+      "label": "$465.00",
+      "fields": {
+        "Text": "$465.00"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 437,
+      "type": "TextBlock",
+      "name": "Text",
+      "label": "31",
+      "fields": {
+        "Text": "31"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 438,
+      "type": "TextBlock",
+      "name": "Text",
+      "label": "5",
+      "fields": {
+        "Text": "5"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 439,
+      "type": "TextBlock",
+      "name": "Text",
+      "label": "NQ DEC26",
+      "fields": {
+        "Text": "NQ DEC26"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 440,
+      "type": "TextBlock",
+      "name": "Text",
+      "label": "Backtest",
+      "fields": {
+        "Text": "Backtest"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 441,
+      "type": "TextBlock",
+      "name": "Text",
+      "label": "CodexCloseMomentum",
+      "fields": {
+        "Text": "CodexCloseMomentum"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 442,
+      "type": "TextBlock",
+      "name": "Text",
+      "label": "Long",
+      "fields": {
+        "Text": "Long"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 443,
+      "type": "TextBlock",
+      "name": "Text",
+      "label": "1",
+      "fields": {
+        "Text": "1"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 444,
+      "type": "TextBlock",
+      "name": "Text",
+      "label": "31354.75",
+      "fields": {
+        "Text": "31354.75"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 445,
+      "type": "TextBlock",
+      "name": "Text",
+      "label": "31336.00",
+      "fields": {
+        "Text": "31336.00"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 446,
+      "type": "TextBlock",
+      "name": "Text",
+      "label": "L",
+      "fields": {
+        "Text": "L"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 447,
+      "type": "TextBlock",
+      "name": "Text",
+      "label": "TimeExit",
+      "fields": {
+        "Text": "TimeExit"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 448,
+      "type": "TextBlock",
+      "name": "Text",
+      "label": "-$375.00",
+      "fields": {
+        "Text": "-$375.00"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 449,
+      "type": "TextBlock",
+      "name": "Text",
+      "label": "-$3,745.00",
+      "fields": {
+        "Text": "-$3,745.00"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 450,
+      "type": "TextBlock",
+      "name": "Text",
+      "label": "$0.00",
+      "fields": {
+        "Text": "$0.00"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 451,
+      "type": "TextBlock",
+      "name": "Text",
+      "label": "$0.00",
+      "fields": {
+        "Text": "$0.00"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 452,
+      "type": "TextBlock",
+      "name": "Text",
+      "label": "$0.00",
+      "fields": {
+        "Text": "$0.00"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 453,
+      "type": "TextBlock",
+      "name": "Text",
+      "label": "$0.00",
+      "fields": {
+        "Text": "$0.00"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 454,
+      "type": "TextBlock",
+      "name": "Text",
+      "label": "$0.00",
+      "fields": {
+        "Text": "$0.00"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 455,
+      "type": "TextBlock",
+      "name": "Text",
+      "label": "$1,270.00",
+      "fields": {
+        "Text": "$1,270.00"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 456,
+      "type": "TextBlock",
+      "name": "Text",
+      "label": "$220.00",
+      "fields": {
+        "Text": "$220.00"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 457,
+      "type": "TextBlock",
+      "name": "Text",
+      "label": "$595.00",
+      "fields": {
+        "Text": "$595.00"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 458,
+      "type": "TextBlock",
+      "name": "Text",
+      "label": "31",
+      "fields": {
+        "Text": "31"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 459,
+      "type": "TextBlock",
+      "name": "Text",
+      "label": "6",
+      "fields": {
+        "Text": "6"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 460,
+      "type": "TextBlock",
+      "name": "Text",
+      "label": "NQ DEC26",
+      "fields": {
+        "Text": "NQ DEC26"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 461,
+      "type": "TextBlock",
+      "name": "Text",
+      "label": "Backtest",
+      "fields": {
+        "Text": "Backtest"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 462,
+      "type": "TextBlock",
+      "name": "Text",
+      "label": "CodexCloseMomentum",
+      "fields": {
+        "Text": "CodexCloseMomentum"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 463,
+      "type": "TextBlock",
+      "name": "Text",
+      "label": "Long",
+      "fields": {
+        "Text": "Long"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 464,
+      "type": "TextBlock",
+      "name": "Text",
+      "label": "1",
+      "fields": {
+        "Text": "1"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 465,
+      "type": "TextBlock",
+      "name": "Text",
+      "label": "31525.75",
+      "fields": {
+        "Text": "31525.75"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 466,
+      "type": "TextBlock",
+      "name": "Text",
+      "label": "31480.00",
+      "fields": {
+        "Text": "31480.00"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 467,
+      "type": "TextBlock",
+      "name": "Text",
+      "label": "L",
+      "fields": {
+        "Text": "L"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 468,
+      "type": "TextBlock",
+      "name": "Text",
+      "label": "TimeExit",
+      "fields": {
+        "Text": "TimeExit"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 469,
+      "type": "TextBlock",
+      "name": "Text",
+      "label": "-$915.00",
+      "fields": {
+        "Text": "-$915.00"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 470,
+      "type": "TextBlock",
+      "name": "Text",
+      "label": "-$4,660.00",
+      "fields": {
+        "Text": "-$4,660.00"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 471,
+      "type": "TextBlock",
+      "name": "Text",
+      "label": "$0.00",
+      "fields": {
+        "Text": "$0.00"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 472,
+      "type": "TextBlock",
+      "name": "Text",
+      "label": "$0.00",
+      "fields": {
+        "Text": "$0.00"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 473,
+      "type": "TextBlock",
+      "name": "Text",
+      "label": "$0.00",
+      "fields": {
+        "Text": "$0.00"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 474,
+      "type": "TextBlock",
+      "name": "Text",
+      "label": "$0.00",
+      "fields": {
+        "Text": "$0.00"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 475,
+      "type": "TextBlock",
+      "name": "Text",
+      "label": "$0.00",
+      "fields": {
+        "Text": "$0.00"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 476,
+      "type": "TextBlock",
+      "name": "Text",
+      "label": "$1,160.00",
+      "fields": {
+        "Text": "$1,160.00"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 477,
+      "type": "TextBlock",
+      "name": "Text",
+      "label": "$10.00",
+      "fields": {
+        "Text": "$10.00"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 478,
+      "type": "TextBlock",
+      "name": "Text",
+      "label": "$925.00",
+      "fields": {
+        "Text": "$925.00"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 479,
+      "type": "TextBlock",
+      "name": "Text",
+      "label": "31",
+      "fields": {
+        "Text": "31"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 480,
+      "type": "TextBlock",
+      "name": "",
+      "label": "Backtest",
+      "fields": {
+        "Text": "Backtest"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 483,
+      "type": "TextBlock",
+      "name": "",
+      "label": "Last",
+      "fields": {
+        "Text": "Last"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 486,
+      "type": "TextBlock",
+      "name": "",
+      "label": "<Use instrument settings>",
+      "fields": {
+        "Text": "<Use instrument settings>"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 487,
+      "type": "TextBlock",
+      "name": "",
+      "label": "",
+      "fields": {
+        "Text": ""
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 488,
+      "type": "TextBlock",
+      "name": "",
+      "label": "256",
+      "fields": {
+        "Text": "256"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 489,
+      "type": "TextBlock",
+      "name": "",
+      "label": "Standard (Fastest)",
+      "fields": {
+        "Text": "Standard (Fastest)"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 490,
+      "type": "TextBlock",
+      "name": "",
+      "label": "All entries",
+      "fields": {
+        "Text": "All entries"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 491,
+      "type": "TextBlock",
+      "name": "",
+      "label": "Strategy",
+      "fields": {
+        "Text": "Strategy"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 492,
+      "type": "TextBlock",
+      "name": "",
+      "label": "GTC",
+      "fields": {
+        "Text": "GTC"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 493,
+      "type": "XamDateTimeEditor",
+      "name": "",
+      "label": "",
+      "fields": {
+        "Value": "2026-09-30T04:31:00.0000000",
+        "SelectedText": null,
+        "Text": "2026-09-30"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 494,
+      "type": "XamDateTimeEditor",
+      "name": "",
+      "label": "",
+      "fields": {
+        "Value": "2026-09-30T05:01:00.0000000",
+        "SelectedText": null,
+        "Text": "2026-09-30"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 495,
+      "type": "XamDateTimeEditor",
+      "name": "",
+      "label": "",
+      "fields": {
+        "Value": "2026-10-01T04:31:00.0000000",
+        "SelectedText": null,
+        "Text": "2026-10-01"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 496,
+      "type": "XamDateTimeEditor",
+      "name": "",
+      "label": "",
+      "fields": {
+        "Value": "2026-10-01T05:01:00.0000000",
+        "SelectedText": null,
+        "Text": "2026-10-01"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 497,
+      "type": "XamDateTimeEditor",
+      "name": "",
+      "label": "",
+      "fields": {
+        "Value": "2026-10-02T04:31:00.0000000",
+        "SelectedText": null,
+        "Text": "2026-10-02"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 498,
+      "type": "XamDateTimeEditor",
+      "name": "",
+      "label": "",
+      "fields": {
+        "Value": "2026-10-02T05:01:00.0000000",
+        "SelectedText": null,
+        "Text": "2026-10-02"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 499,
+      "type": "XamDateTimeEditor",
+      "name": "",
+      "label": "",
+      "fields": {
+        "Value": "2026-10-03T04:31:00.0000000",
+        "SelectedText": null,
+        "Text": "2026-10-03"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 500,
+      "type": "XamDateTimeEditor",
+      "name": "",
+      "label": "",
+      "fields": {
+        "Value": "2026-10-03T05:01:00.0000000",
+        "SelectedText": null,
+        "Text": "2026-10-03"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 501,
+      "type": "XamDateTimeEditor",
+      "name": "",
+      "label": "",
+      "fields": {
+        "Value": "2026-10-06T04:31:00.0000000",
+        "SelectedText": null,
+        "Text": "2026-10-06"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 502,
+      "type": "XamDateTimeEditor",
+      "name": "",
+      "label": "",
+      "fields": {
+        "Value": "2026-10-06T05:01:00.0000000",
+        "SelectedText": null,
+        "Text": "2026-10-06"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 503,
+      "type": "XamDateTimeEditor",
+      "name": "",
+      "label": "",
+      "fields": {
+        "Value": "2026-10-07T04:31:00.0000000",
+        "SelectedText": null,
+        "Text": "2026-10-07"
+      },
+      "enabled": true,
+      "items": []
+    },
+    {
+      "id": 504,
+      "type": "XamDateTimeEditor",
+      "name": "",
+      "label": "",
+      "fields": {
+        "Value": "2026-10-07T05:01:00.0000000",
+        "SelectedText": null,
+        "Text": "2026-10-07"
+      },
+      "enabled": true,
+      "items": []
+    }
+  ]
+}

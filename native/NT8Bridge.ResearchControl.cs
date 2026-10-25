@@ -162,7 +162,7 @@ namespace NinjaTrader.NinjaScript.AddOns
         private static string Research_Fields(FrameworkElement fe)
         {
             var fields = new List<string>();
-            foreach (string name in new[] { "Value", "SelectedDate", "Instrument", "Text", "IsChecked", "IsExpanded", "SelectedIndex" })
+            foreach (string name in new[] { "Value", "SelectedDate", "SelectedText", "Instrument", "Text", "IsChecked", "IsExpanded", "SelectedIndex" })
             {
                 var pi = fe.GetType().GetProperty(name, BindingFlags.Public | BindingFlags.Instance);
                 if (pi == null || !pi.CanRead || pi.GetIndexParameters().Length != 0) continue;
@@ -244,15 +244,40 @@ namespace NinjaTrader.NinjaScript.AddOns
                     bool enabled = OnChart(chart, cc => cc.Strategies != null && cc.Strategies.Any(s => s != null && s.IsEnabled));
                     if (enabled) throw new BadRequestException("chart has an enabled strategy");
                 }
-                if (!(windowTitle == "Historical Data" || windowTitle == "Playback" || chartInstrument))
+                bool analyzer = windowTitle == "Strategy Analyzer";
+                if (analyzer)
+                {
+                    var selector = snap.Controls.OfType<Gui.Tools.NinjaScriptSelector>().SingleOrDefault();
+                    if (selector == null || selector.SelectedText != "CodexCloseMomentum")
+                        throw new BadRequestException("Analyzer pilot requires observed CodexCloseMomentum");
+                    if (action == "invoke" && (!(fe is Button) || Research_Label(fe) != "Run"))
+                        throw new BadRequestException("Analyzer pilot permits only Run button");
+                }
+                if (!(windowTitle == "Historical Data" || windowTitle == "Playback" || analyzer || chartInstrument))
                     throw new BadRequestException("actions only supported on research windows");
                 if (action == "invoke" && fe is Button)
                 {
                     // Historical data only: no delete/import/export/order buttons.
                     string label = Research_Label(fe);
-                    if (label != "Download" && label != "다운로드" && label != "Get Market Replay data")
+                    if (!(analyzer && label == "Run") && label != "Download" && label != "다운로드" && label != "Get Market Replay data")
                         throw new BadRequestException("button is outside download allowlist: " + label);
-                    ((Button)fe).RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+                    var button = (Button)fe;
+                    if (analyzer && button.Command != null)
+                    {
+                        var routed = button.Command as System.Windows.Input.RoutedCommand;
+                        if (routed != null)
+                        {
+                            var target = button.CommandTarget ?? button;
+                            if (!routed.CanExecute(button.CommandParameter, target)) throw new BadRequestException("Run command unavailable");
+                            routed.Execute(button.CommandParameter, target);
+                        }
+                        else
+                        {
+                            if (!button.Command.CanExecute(button.CommandParameter)) throw new BadRequestException("Run command unavailable");
+                            button.Command.Execute(button.CommandParameter);
+                        }
+                    }
+                    else button.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
                 }
                 else if (action == "select" && fe is TabItem) ((TabItem)fe).IsSelected = true;
                 else if (action == "expand" && fe is Expander) ((Expander)fe).IsExpanded = true;
@@ -263,11 +288,23 @@ namespace NinjaTrader.NinjaScript.AddOns
                     if (matches.Length != 1) throw new BadRequestException("option must match one observed item");
                     box.SelectedItem = matches[0];
                 }
-                else if (action == "set" && fe is TextBox) ((TextBox)fe).Text = value;
+                else if (action == "set" && fe is TextBox)
+                {
+                    ((TextBox)fe).Text = value;
+                    var binding = ((TextBox)fe).GetBindingExpression(TextBox.TextProperty);
+                    if (binding != null) binding.UpdateSource();
+                }
                 else if (action == "set" && fe is DatePicker) ((DatePicker)fe).SelectedDate = DateTime.ParseExact(value, "yyyy-MM-dd", CultureInfo.InvariantCulture);
                 else if (action == "set")
                 {
                     string property = JGetStr(req, "property", "Value");
+                    if (analyzer && fe.GetType().FullName == "NinjaTrader.Gui.TradePerformance.DisplayModeSelector" && property == "Display")
+                    {
+                        if (value != "Trades" && value != "Summary") throw new BadRequestException("Only Trades or Summary view permitted");
+                        var display = fe.GetType().GetProperty("Display");
+                        display.SetValue(fe, Enum.Parse(display.PropertyType, value), null);
+                        return Obj(P("ok", "true"), P("note", Q("read view again")));
+                    }
                     if (property != "Value" && property != "Instrument") throw new BadRequestException("custom control property must be Value or Instrument");
                     var pi = fe.GetType().GetProperty(property, BindingFlags.Public | BindingFlags.Instance);
                     if (pi == null || !pi.CanWrite) throw new BadRequestException("property unavailable");
