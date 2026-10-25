@@ -15,6 +15,34 @@ Native SMA is a functional reference, not a recommended competition strategy.
 The Python candidates are opening-range breakout, breakout retest, and failed
 initial-balance breakout. No grid expands based on results.
 
+### Literature basis and scope
+
+- [Cont, Kukanov & Stoikov, The Price Impact of Order Book Events](https://arxiv.org/abs/1011.6402)
+  documents a short-horizon relationship between best-quote order-flow imbalance
+  and contemporaneous price changes in US stocks. This supports testing whether
+  changes in supply/demand explain a breakout; it does not establish a profitable
+  NQ forecast. OFI includes quote changes/cancellations and is not trade delta.
+- [Gould & Bonart, Queue Imbalance as a One-Tick-Ahead Price Predictor](https://arxiv.org/abs/1512.03492)
+  tests imbalance against the next mid-price movement in ten Nasdaq stocks.
+  NQ execution costs, horizons and queues must be independently tested. Predicting
+  a tick direction does not by itself imply an executable positive expectancy.
+- [Bailey et al., The Probability of Backtest Overfitting](https://www.davidhbailey.com/dhbpapers/backtest-prob.pdf)
+  motivates preserving all trials and treating selected high backtest performance
+  cautiously. Repeatedly choosing on the same recent window contaminates validation.
+- [CME NQ specifications](https://www.cmegroup.com/markets/equities/nasdaq/e-mini-nasdaq-100.contractSpecs.html)
+  specify $20 per index point and a 0.25-point tick ($5), distinct from MNQ.
+
+The following are our proposed NQ hypotheses, not proven conclusions of those
+papers: (1) volatility expansion plus price/flow confirmation continues an opening
+range breakout; (2) a pullback followed by renewed aggressive flow resumes a trend;
+(3) a range break with large aggression but weak price response subsequently fails.
+First establish each price-only baseline, then add one flow feature and compare
+its incremental effect with unchanged costs/risk/time rules. Keep no-trade cases,
+measure turnover and tail losses, remove best trades as a concentration check,
+and stress costs. L2 reconstruction, bid/ask classification and timestamp integrity
+must pass before OFI/queue results can be interpreted. No current regime or winning
+strategy is inferred from these papers alone.
+
 Python uses Yahoo NQ prices with **$20/point**, max 8 contracts and a $300 nominal
 entry-risk budget. Legacy code defaults remain unchanged for older callers;
 the runner supplies the NQ multiplier in an isolated child. A zero-contract
@@ -43,6 +71,17 @@ stress: 4 ticks and $10. These are assumptions, not verified broker fees. Native
 NT applies its slippage model; commission is explicitly disabled in NT and
 deducted from each returned trade by the adapter. Standard-bar fills do not
 prove tick-by-tick executability. Native loaded bars/settings are retained.
+Cost scenarios rerun sizing and entry eligibility, so the trade sets can differ;
+this is not a fixed-ledger fee sensitivity calculation.
+
+Native results now fail closed when requested and loaded periods do not match.
+A mismatch blocks remaining native comparisons on the same data fingerprint.
+An explicitly declared `expected_bars` window permits one functional reproduction
+of an observed partial Playback range, checked for exact first/last bar equality.
+It does not authorize arbitrary-date backtests or establish full-session coverage.
+The bridge compares the US Eastern Playback clock with NT-local timestamps without
+conversion; its warning remains in evidence even when an explicit observed local
+window matches. This runner does not patch or reload the user's bridge.
 
 ## Persistence and controls
 

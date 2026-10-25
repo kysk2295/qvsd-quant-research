@@ -15,6 +15,14 @@ class Worker:
         atomic(self.q.folder/(jid+'.result.json'),result)
         self.q.update(jid,status='rejected' if result.get('rejected') else 'completed',
                       phase='검증 계산 완료 · 채택과 별개',progress=100,result=canonical(result),reason=result['reason'])
+        if result.get('coverage_invalid'):
+            spec=json.loads(self.q.get(jid)['spec'])
+            self.q.control('coverage-block:'+spec['data_hash'],'Native loaded/requested coverage mismatch')
+            for other in self.q.rows():
+                other_spec=json.loads(other['spec'])
+                if (other['status']=='queued' and other_spec['engine']=='nt' and
+                    other_spec['data_hash']==spec['data_hash'] and not other_spec['params'].get('expected_bars')):
+                    self.q.block(other['id'],'Earlier native case failed coverage; further comparison blocked')
 
     def cancel(self,row,reason):
         try:
@@ -38,6 +46,9 @@ class Worker:
         row=self.q.get(jid);s=json.loads(row['spec'])
         if s['engine']=='blocked':
             self.q.block(jid,s.get('blocked_reason','Required data unavailable'));return
+        if (s['engine']=='nt' and self.q.control('coverage-block:'+s['data_hash']) and
+            not s['params'].get('expected_bars')):
+            self.q.block(jid,'Known native coverage mismatch; requires repaired data or explicit observed-window reproduction');return
         try: verify_files(s)
         except Exception as exc:
             self.q.block(jid,str(exc));return
@@ -91,7 +102,9 @@ class Worker:
                 # Persist sanitized audit, never account details or raw market data in telemetry.
                 atomic(self.q.folder/(jid+'.native.json'),{k:doc.get(k) for k in
                       ('state','settings','barsFrom','barsTo','warnings','summary','trades','equity')})
-                try: self.finish(jid,native_result(doc,s))
+                try:
+                    verify_files(s)
+                    self.finish(jid,native_result(doc,s))
                 except Exception as exc:self.q.update(jid,status='failed',phase='결과 검증 실패',reason=str(exc)[:240])
             elif state in ('error','timeout','cancelled'):
                 self.q.update(jid,status='failed',phase='NT 계산 실패',reason=str(doc.get('error',state))[:240])

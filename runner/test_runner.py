@@ -81,12 +81,30 @@ class Tests(unittest.TestCase):
             self.assertEqual(validate_run(snap)['status'],status)
             self.assertEqual(snap['worker'],'windows-experiment-runner')
     def test_native_cost_reconstruction_and_readback(self):
-        doc=dict(settings={'slippageTicks':2},summary={'trades':2},trades=[
+        doc=dict(settings={'slippageTicks':2,'includeCommission':False,'fillResolution':'Standard','includeTradeHistory':True},summary={'trades':2},trades=[
           dict(pnl=100,qty=2,exitTime='a'),dict(pnl=-50,qty=1,exitTime='b')])
         r=native_result(doc,self.s);self.assertEqual(r['metrics']['net'],35)
         self.assertEqual(r['metrics']['closed_trade_mdd'],55)
         doc['settings']['slippageTicks']=0
         with self.assertRaises(ValueError):native_result(doc,self.s)
+    def test_coverage_mismatch_blocks_following_native_case(self):
+        jid=self.q.enqueue(self.s);s2=copy.deepcopy(self.s);s2['params']['other']=1
+        other=self.q.enqueue(s2)
+        self.w.finish(jid,dict(metrics={},equity=[],rejected=True,coverage_invalid=True,reason='mismatch'))
+        self.assertEqual(self.q.get(jid)['status'],'rejected')
+        self.assertEqual(self.q.get(other)['status'],'blocked')
+    def test_exact_observed_window_reproduction_is_separate(self):
+        s=copy.deepcopy(self.s);s['params']['expected_bars']={'from':'2026-09-30T07:05:00','to':'2026-10-02T13:00:00'}
+        s['request'].update(s['params']['expected_bars'])
+        doc=dict(settings={'slippageTicks':2,'includeCommission':False,'fillResolution':'Standard','includeTradeHistory':True},
+                 summary={'trades':0},trades=[],barsFrom=s['request']['from'],barsTo=s['request']['to'],
+                 warnings=['Playback warning uses Eastern clock against NT local clock'])
+        self.assertFalse(native_result(doc,s)['coverage_invalid'])
+        doc['barsTo']='2026-10-01T13:00:00'
+        self.assertTrue(native_result(doc,s)['coverage_invalid'])
+    def test_missing_native_window_is_rejected(self):
+        doc=dict(settings={'slippageTicks':2,'includeCommission':False,'fillResolution':'Standard','includeTradeHistory':True},summary={'trades':0},trades=[])
+        self.assertTrue(native_result(doc,self.s)['rejected'])
     def test_changed_data_blocks_before_submit(self):
         Path(self.s['files'][0]).write_text('changed');jid=self.start()
         self.assertEqual(self.q.get(jid)['status'],'blocked');self.assertFalse(self.b.calls)
