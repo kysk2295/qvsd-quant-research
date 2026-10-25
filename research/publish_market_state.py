@@ -1,0 +1,174 @@
+"""Render and explicitly publish one data-only report, without strategy metrics."""
+import argparse
+import hashlib
+import json
+from datetime import datetime, timezone
+from runner.core import ROOT, Queue, atomic, file_hash
+from dashboard.reporter import emit, post
+from dashboard.server import validate_run
+from runner.research_lifecycle import Lifecycle
+from research.analyze_market_state import PLAN, PLAN_SHA256, RESULT, read, require, verify_hashes
+
+DOC = 'docs/nq-market-state-baseline-2026-10-25.md'
+PUBLICATION = 'research/nq-market-state-publication.json'
+
+
+def number(value, digits=2):
+    return '—' if value is None else f'{value:,.{digits}f}'
+
+
+def interval(stats, scale=1, digits=2):
+    def n(key):
+        return number(stats[key]*scale if stats[key] is not None else None, digits)
+    return f"{n('median')} [{n('q1')}–{n('q3')}]"
+
+
+def render(result):
+    lines = [
+        '# NQ 개발자료 시장 상태 분석 — 2026-10-25', '',
+        '같은 NQ 12월물의 최근 5세션에서는 이전 10세션보다 일중 범위와 거래량이 커졌다. 여섯 시간대 모두 1분 가격 움직임의 중앙값이 높아졌지만, 방향 효율과 5분 부호 전환은 시간대별로 달랐다. 이 결과는 짧은 개발자료의 관찰이며 전략 수익성이나 지속적인 장세 변화를 입증하지 않는다.', '',
+        '## 범위와 비교 기준', '',
+        '- 상품: NQ DEC26 / NQ 12-26. 시간: 미국 동부 ET, RTH 09:30 포함–16:00 제외.',
+        '- 이전 10일: 2026-10-02, 05–09, 12–15. 최근 5일: 2026-10-16, 19–22. 각 요일이 각각 2회/1회로 구성된다.',
+        '- 최신 사용일은 10월 22일이다. 10월 23일은 디코더와 헤더의 거래량·범위 불일치로 제외했다. 10월 26일 이후 데이터는 열람하거나 평가하지 않았다.',
+        '- 기존 rawLast에서 만든 15일 × 390분 = 5,850분 캐시를 재사용했다. 일별 가격 범위·시가→종가 변화는 기존 Cafe 자료를 재사용하고 캐시와 대조했다.',
+        '- 비교 기간·여섯 시간대·계산식은 이번 계산 전에 등록했다. 이 날짜들은 이미 이전 전략 개발에 쓰였으므로 독립 검증 자료가 아니다.',
+        '- Yahoo 5분 연속물, 다른 방식으로 확보한 9월 28일–10월 1일 봉, 분리된 9월 23–25일 자료를 섞지 않았다.', '',
+        '## 일별 전체 세션 맥락', '',
+        '각 셀은 **중앙값 [Q1–Q3]**이다. 사분위 범위는 관측일 간 분산을 나타내며 신뢰구간이 아니다.', '',
+        '| 지표 | 이전 10일 | 최근 5일 |',
+        '|---|---:|---:|']
+    context = result['daily_context_distributions']
+    for key, label, digits in [
+        ('rth_range_points', '일중 고가−저가 (포인트)', 2),
+        ('rth_volume', 'RTH 기록 거래량 (계약)', 0),
+        ('open_close_points', '시가→종가 변화 (포인트)', 2)]:
+        lines.append(f"| {label} | {interval(context['baseline'][key], digits=digits)} | {interval(context['recent'][key], digits=digits)} |")
+    lines += ['',
+        '최근 일중 범위 중앙값은 약 78%, RTH 거래량 중앙값은 약 36% 증가했다. 이는 두 표본 중앙값의 변화이며 일별 증가율 평균이 아니다. 최근에도 상승 마감일과 하락 마감일이 함께 있어, 단순히 한 방향의 장으로 묶을 수 없다.', '',
+        '## 시간대별 가격 움직임과 거래량', '',
+        'RMS는 1분 로그 가격 변화의 제곱평균제곱근으로, 단위는 bp(1bp=0.01%)다. 방향성 움직임도 포함하므로 중심화 표준편차가 아니다. 각 값은 세션별로 먼저 계산한 후 요약했다.', '',
+        '| ET 시간 | RMS 이전 (bp) | RMS 최근 (bp) | 분당 계약 이전 | 분당 계약 최근 |',
+        '|---|---:|---:|---:|---:|']
+    for row in result['bucket_distributions']:
+        b, r = row['baseline'], row['recent']
+        lines.append(f"| {row['bucket']} | {interval(b['rms_log_move_bps'])} | {interval(r['rms_log_move_bps'])} | {interval(b['volume_per_minute'], digits=0)} | {interval(r['volume_per_minute'], digits=0)} |")
+    lines += ['',
+        '최근 5일의 RMS와 분당 거래량 중앙값은 여섯 구간 모두 이전 10일보다 높았다. 이 변화는 최근의 가격 변동 규모와 거래 활동을 설명한다. 거래량은 매수·매도 구분이 없는 기록 Last 계약량이며 매수 압력이나 호가 유동성의 직접 측정값은 아니다.', '',
+        '## 시간대별 방향 효율과 부호 전환', '',
+        '방향 효율은 |구간 순변화| / 1분 종가 경로의 절대 이동 합이며, 1에 가까울수록 관측 경로가 한 방향에 가깝다. 부호 전환은 비중복 5분 변화가 직전 5분 변화와 반대 부호인 비율이다. 둘은 같은 개념이 아니며, 아래 비율은 승률이 아니다.', '',
+        '| ET 시간 | 방향 효율 이전 (%) | 방향 효율 최근 (%) | 5분 전환 이전 (%) | 5분 전환 최근 (%) |',
+        '|---|---:|---:|---:|---:|']
+    for row in result['bucket_distributions']:
+        b, r = row['baseline'], row['recent']
+        lines.append(f"| {row['bucket']} | {interval(b['directional_efficiency'], 100, 1)} | {interval(r['directional_efficiency'], 100, 1)} | {interval(b['five_minute_reversal_fraction'], 100, 1)} | {interval(r['five_minute_reversal_fraction'], 100, 1)} |")
+    lines += ['',
+        '예를 들어 10:00–10:30은 방향 효율 중앙값이 18.5%→36.8%로 커지고 5분 전환 비율은 60%→20%로 낮아졌다. 반면 09:30–10:00의 방향 효율은 11.1%→5.0%로 낮아졌다. 같은 최근 구간에도 시간대별 모습이 다르다. 이것만으로 특정 시간대를 거래하거나 제외하는 규칙을 채택하지 않는다.', '',
+        '5분 부호 전환이 많아도 작은 반등과 큰 손실이 섞일 수 있다. 움직임의 크기, 진입 시점, 비용과 체결을 평가하지 않았으므로 평균회귀 수익성으로 해석할 수 없다.', '',
+        '| ET 시간 | 이전 전환 수 / 유효 쌍 | 이전 제로 제외 쌍 | 최근 전환 수 / 유효 쌍 | 최근 제로 제외 쌍 |',
+        '|---|---:|---:|---:|---:|']
+    for row in result['bucket_distributions']:
+        b, r = row['baseline']['reversal_pair_counts'], row['recent']['reversal_pair_counts']
+        lines.append(f"| {row['bucket']} | {b['reversals']} / {b['eligible']} | {b['excluded_zero']} | {r['reversals']} / {r['eligible']} | {r['excluded_zero']} |")
+    lines += ['',
+        '쌍 수 합계는 자료 범위 확인용이다. 위의 전환 비율 표는 일별 비율의 중앙값이므로 이 합계의 단순 나눗셈과 다를 수 있다. 두 변화 중 하나라도 0이면 그 인접 쌍을 제외하며, 0을 건너뛰어 다른 쌍을 연결하지 않는다.', '',
+        '## 정보가 알려지는 시각', '',
+        '| 정보 | 알 수 있는 시점 | 적용 한계 |',
+        '|---|---|---|',
+        '| 09:30–10:00 구간 통계 | 10:00 이후 | 이 값으로 09:30 진입 여부를 고르면 미래정보 사용 |',
+        '| 다른 구간의 완결 통계 | 각 구간 종료 이후 | 해당 구간 안의 과거 진입을 선택하는 데 사용 불가 |',
+        '| 종일 고저·시가→종가·최종 VWAP·종일 추세 분류 | 장 종료 이후 | 장 초반에 이미 알았던 상태로 취급 불가 |',
+        '| 실시간 누적 변동·거래량·가격 위치·주문 흐름 | 판단 시점까지 도착한 정보만 | 이 보고서에서는 진입 특징으로 만들거나 검증하지 않음 |', '',
+        '## 계산·검증 근거', '',
+        '- 구간마다 첫 봉 시가를 시작점으로 삼고, 이후에는 직전 1분 종가와 현재 종가를 비교했다. 구간 직전 종가→첫 시가 차이는 포함하지 않는다. 5분 변화도 동일한 구간 내부 시작점을 사용했다.',
+        '- 1분 종가 경로는 봉 내부의 모든 가격 변화를 담지 않는다. 방향 효율과 전환 빈도는 이 표본 간격에 의존한다.',
+        '- 날짜·시간 구간을 넘는 변화나 전환 쌍을 만들지 않았다. 방향 경로 길이가 0이면 효율은 미정의, 유효 쌍이 없으면 전환 비율은 미정의다.',
+        '- 15일 모든 390분의 존재, 양수·유한·0.25포인트 단위 OHLC, 올바른 고저 범위, 양의 정수 거래량을 확인했다.',
+        '- 15개 원본 Last 파일의 SHA256, 캐시·기존 감사 자료 해시, 일별 거래량·가격 범위·순변화를 대조했다. 누락 채움이나 다른 공급자 치환은 없다.',
+        '- 집계 단위는 세션이다. 각 시간대의 이전 표본 수는 10, 최근은 5이며 이번 값에는 미정의 관측이 없다. 사분위는 (n−1)×p 위치 선형 보간(type 7)이다. JSON에 최솟값·최댓값·관측 수·일별 원계산 값도 보존했다.',
+        '- 순방향·왕복·완전 횡보·제로 변화·구간 경계·분 키 순서·잘못된 입력·사분위의 합성 테스트 9개 통과. 독립 읽기 전용 코드 검토에서 필수 수정 사항이 발견되지 않았다.',
+        '- 새 데이터 다운로드 0회, NinjaTrader 실행 0회, 전략 손익 계산 0회, 최적화 0회. 기존 전략 원장·미래 계획·캠페인 통제 파일은 해시가 동일하다.', '',
+        '## 해석 한계와 후속 연구에 필요한 자료', '',
+        '단일 월물의 인접한 15세션이며 뉴스·경제 발표 효과나 시계열 의존성을 통제하지 않았다. 요일 수가 균형적이어도 장기 시장 국면을 대표하지 않는다. 같은 자료로 만든 가설은 별도 기간에서 검증해야 한다.', '',
+        '이번 분석은 Last 가격·거래량에 한정한다. 상위 원자료에 호가가 존재하지만 스프레드·매수매도 공격성·호가 대기열·실제 체결 가능성은 이번에 검증하지 않았다. 같은 타임스탬프의 정확한 거래소 이벤트 순서도 확정되지 않았다.', '',
+        '후속 작업을 시작하려면 먼저 범위를 별도로 정해야 한다. 필요한 조건은 다음과 같다.', '',
+        '1. 더 긴 비교: 같은 월물·소스·세션 정의로 연결되는 추가 과거 자료와 품질 근거. 다른 소스를 섞어서 이번 비교를 연장하지 않는다.',
+        '2. 최신일 포함: 10월 23일 디코더/헤더 불일치의 해소와 재현 가능한 품질 기록.',
+        '3. 주문 흐름 분석: 호가 시각·정렬·수량·매매 방향 분류의 품질 정의. 기존 OFI 자료를 우선 재사용한다.',
+        '4. 전략 설계: 진입 전에 관측 가능한 상태 정의, 소수의 사전 가설, 손절·청산·체결 가정, 아직 선택에 쓰지 않은 검증 기간을 명시. 이번 통계만 보고 수익 좋은 시간·임계값을 고르지 않는다.', '',
+        '위 항목은 현재 실행 중인 실험이나 예약 작업이 아니다. 이번 작업은 보고서 1건과 대시보드 수신 확인 후 종료한다. 기존 볼린저 미래 계획과 네이티브 실행 허용 수 0을 변경하지 않는다.', '',
+        '## 보존 자료', '',
+        '- [계산 전 등록 계획](../research/nq-market-state-plan.json)',
+        '- [일별·시간대별 계산 및 분포 JSON](../research/nq-market-state-baseline.json)',
+        '- [계산 코드](../research/analyze_market_state.py) / [지표 함수](../research/market_state_metrics.py) / [합성 테스트](../tests/test_market_state_metrics.py)',
+        '- [기존 1분 캐시](../research/stochastic-coverage.json) / [기존 거래량 감사](../research/recent-tick-audit-20261025.json) / [기존 일별 맥락](../research/cafe-regime-inventory.json)',
+        '- [대시보드 수신 기록](../research/nq-market-state-publication.json)', '',
+        f"계획 SHA256: `{PLAN_SHA256}`. 계산 결과 SHA256: `{file_hash(ROOT/RESULT)}`."]
+    (ROOT/DOC).write_text('\n'.join(lines)+'\n', encoding='utf-8')
+
+
+def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--publish', action='store_true')
+    args = parser.parse_args()
+    plan, result = read(PLAN), read(RESULT)
+    verify_hashes(plan)
+    require(result['plan_sha256'] == PLAN_SHA256 and result['quality']['passed'] is True, 'Result provenance/quality failed')
+    require(all(file_hash(ROOT/p) == h for p, h in result['analysis_code_hashes'].items()), 'Analysis code changed after calculation')
+    render(result)
+    if not args.publish:
+        print(json.dumps(dict(report=DOC, published=False)))
+        return
+    require(not (ROOT/PUBLICATION).exists(), 'Publication already recorded; inspect existing evidence')
+    run = dict(id=result['id'], strategy='개발자료 시장 상태 분석', symbol='NQ DEC26',
+               source='Preserved rawLast-derived minute data; descriptive development analysis',
+               worker='windows-candidate-research', dataset='NQ DEC26 RTH: Oct2–15 baseline10; Oct16–22 recent5',
+               status='completed', progress=100, phase='data_analysis', metrics={}, equity=[],
+               reason='최근5일 일중범위/거래량 중앙값512pt/49.1만; 이전10일287pt/36.1만. 기술통계이며 전략·백테스트·독립 검증 아님.',
+               params=dict(data_report=dict(plan=PLAN, plan_sha256=PLAN_SHA256, result=RESULT,
+                   result_sha256=file_hash(ROOT/RESULT), report=DOC, report_sha256=file_hash(ROOT/DOC),
+                   baseline_dates=result['baseline_dates'], recent_dates=result['recent_dates'],
+                   bucket_distributions=result['bucket_distributions'], daily_context_distributions=result['daily_context_distributions'],
+                   limitations=result['limitations'], causal_availability=result['causal_availability'],
+                   source_scope='Last-only metrics; upstream quotes exist but quote/execution features not evaluated',
+                   independent_oos=False, strategy_defined=False, native_runs=0, downloads=0, performance_tests=0)),
+               evidence=DOC)
+    validate_run(run)
+    q = Queue()
+    config = json.loads((ROOT.parent/'qvsd-dashboard-agent/.dashboard-worker.json').read_text(encoding='utf-8'))
+    emit(run, q.telemetry)
+    require(post(config['url'], '/api/runs', run, config['token']).get('ok') is True, 'Dashboard ACK missing')
+    snap = q.telemetry/(hashlib.sha256(run['id'].encode()).hexdigest()+'.json')
+    q.control('ack:'+snap.name, file_hash(snap))
+    completed = datetime.now(timezone.utc).isoformat()
+    publication = dict(run_id=run['id'], ack=True, completed_at_utc=completed,
+                       result_sha256=file_hash(ROOT/RESULT), report_sha256=file_hash(ROOT/DOC),
+                       plan_sha256=PLAN_SHA256, telemetry_sha256=file_hash(snap),
+                       tests_passed=9, native_runs=0, downloads=0, performance_tests=0,
+                       immutable_hashes_preserved=True, report_type='development_data_analysis_not_strategy_performance')
+    atomic(ROOT/PUBLICATION, publication)
+    ledger = read('research/campaign-data-analysis-ledger.json')
+    entry = next(e for e in ledger['entries'] if e['id'] == plan['id'])
+    entry.update(status='completed', completed_at_utc=completed, result=RESULT,
+                 result_sha256=file_hash(ROOT/RESULT), report=DOC, publication=PUBLICATION, dashboard_ack=True)
+    atomic(ROOT/'research/campaign-data-analysis-ledger.json', ledger)
+    queue = read('research/evidence-work-queue.json')
+    task = next(t for t in queue['tasks'] if t['id'] == plan['id'])
+    task.update(status='completed', evidence=RESULT, report=DOC, publication=PUBLICATION, native_runs=0)
+    atomic(ROOT/'research/evidence-work-queue.json', queue)
+    backlog = read('research/candidate-backlog.json')
+    backlog['market_state_analysis'].update(status='completed', evidence=RESULT, report=DOC, publication=PUBLICATION,
+        dashboard_ack=True, resumed=False, next_action='Completed one descriptive report; no active strategy experiment or scheduler.',
+        resume_requirements=[
+            'Separately scoped same-source broader-history comparison with provenance and quality evidence',
+            'Resolve Oct23 source/header disagreement before adding that date',
+            'For quote features: audited timestamp/order/quantity/aggressor specification using preserved quote data',
+            'For future strategy research: causal pre-entry features, finite hypotheses and separate untouched evaluation; no current native release'])
+    atomic(ROOT/'research/candidate-backlog.json', backlog)
+    verify_hashes(plan)
+    Lifecycle().update('idle', 'One NQ development-data market-state report completed and ACKed: 15sessions/5850minutes, recent5 versus prior10. No strategy/native/download/optimization; frozen plan unchanged. No repeated analysis or scheduler started.', None)
+    print(json.dumps(dict(report=DOC, dashboard_ack=True, sessions=15, tests=9, native_runs=0, downloads=0)))
+
+
+if __name__ == '__main__':
+    main()
