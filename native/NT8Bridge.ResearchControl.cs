@@ -115,7 +115,7 @@ namespace NinjaTrader.NinjaScript.AddOns
                     throw new BadRequestException("invalid explicit research window handle");
                 title = title.Substring(0, split);
             }
-            if (!(title == "Historical Data" || title == "Playback" || title == "Warning" || title == "Error" || title == "Control Center"))
+            if (!(title == "Historical Data" || title == "Strategy Analyzer" || title == "Playback" || title == "Warning" || title == "Error" || title == "Control Center"))
                 throw new BadRequestException("only research and Control Center windows are readable");
             HashSet<Window> owned; var all = KnownWindows(out owned);
             var found = all.Where(w => Ui(w.Dispatcher, () => TitleOf(w) == title &&
@@ -292,14 +292,15 @@ namespace NinjaTrader.NinjaScript.AddOns
 
         private static string Research_Open(string title)
         {
-            if (title != "Historical Data") throw new BadRequestException("only Historical Data may be opened");
+            if (title != "Historical Data" && title != "Strategy Analyzer") throw new BadRequestException("only Historical Data or Strategy Analyzer may be opened");
             Window center; lock (gate) center = windows.FirstOrDefault(w => w is Gui.ControlCenter);
             if (center == null) throw new BadRequestException("Control Center unavailable");
             return Ui(center.Dispatcher, () =>
             {
                 var types = typeof(Gui.ControlCenter).Assembly.GetTypes().Where(t => typeof(Window).IsAssignableFrom(t)
-                    && (t.Name == "HistoricalData" || t.Name == "HistoricalDataWindow")).ToArray();
-                if (types.Length != 1) throw new BadRequestException("Historical Data window type unresolved");
+                    && (title == "Historical Data" ? (t.Name == "HistoricalData" || t.Name == "HistoricalDataWindow")
+                        : t.FullName == "NinjaTrader.Gui.NinjaScript.StrategyAnalyzer.StrategyAnalyzer")).ToArray();
+                if (types.Length != 1) throw new BadRequestException("research window type unresolved");
                 var win = (Window)Activator.CreateInstance(types[0]); win.Show();
                 return Obj(P("requested", "true"), P("title", Q(title)));
             });
