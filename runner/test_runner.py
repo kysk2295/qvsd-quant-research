@@ -112,6 +112,13 @@ class Tests(unittest.TestCase):
         self.assertFalse(native_result(doc,self.s)['rejected'])
         doc['trades'][0]['entryTime']='2026-09-27T10:00:00'
         r=native_result(doc,self.s);self.assertTrue(r['rejected']);self.assertEqual(r['metrics']['out_of_window_trades'],1)
+    def test_invalid_coverage_still_counts_outside_trades(self):
+        doc=dict(settings={'slippageTicks':2,'includeCommission':False,'fillResolution':'Standard','includeTradeHistory':True},
+                 summary={'trades':1},trades=[dict(pnl=50,qty=1,entryTime='2026-10-01T10:00:00',exitTime='2026-10-01T12:00:00')],
+                 barsFrom='2026-10-01T07:00:00',barsTo='2026-10-02T13:00:00',warnings=[])
+        result=native_result(doc,self.s)
+        self.assertTrue(result['coverage_invalid'])
+        self.assertEqual(result['metrics']['out_of_window_trades'],1)
     def test_changed_data_blocks_before_submit(self):
         Path(self.s['files'][0]).write_text('changed');jid=self.start()
         self.assertEqual(self.q.get(jid)['status'],'blocked');self.assertFalse(self.b.calls)

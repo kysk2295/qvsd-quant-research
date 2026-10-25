@@ -57,7 +57,7 @@ def native_result(doc,spec):
         coverage_ok=(first<=last and first<=end and last>=start and first.date()<=start.date() and last.date()>=end.date()
                      and not any('not for the requested' in str(w).lower() for w in doc.get('warnings',[])))
     outside=0
-    if coverage_ok:
+    if trades:
         start=datetime.fromisoformat(spec['request']['from']);end=datetime.fromisoformat(spec['request']['to'])
         if len(spec['request']['to'])==10:end+=timedelta(days=1,seconds=-1)
         for trade in trades:
@@ -65,7 +65,7 @@ def native_result(doc,spec):
                 entry=datetime.fromisoformat(trade['entryTime']);exit=datetime.fromisoformat(trade['exitTime'])
                 if not start<=entry<=exit<=end:outside+=1
             except (KeyError,TypeError,ValueError):outside+=1
-        coverage_ok=outside==0
+        coverage_ok=coverage_ok and outside==0
     if spec['params'].get('nt_time_zone') and doc.get('timeZone')!=spec['params']['nt_time_zone']:coverage_ok=False
     if spec['request'].get('explicitBars') and doc.get('explicitBars') is not True:coverage_ok=False
     return dict(metrics=dict(net=round(sum(pnl),2),trades=len(pnl),closed_trade_mdd=round(dd,2),
