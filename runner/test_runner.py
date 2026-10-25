@@ -31,7 +31,7 @@ class Tests(unittest.TestCase):
           files=[str(f)],code_files=[str(f)],code_hash=h,code_commit='test',params={},timeout_s=2,max_preflight_retries=1,
           cost=dict(label='test',slippage_ticks=2,round_trip_fee=5),request=dict(strategy='SampleMACrossOver',instrument='NQ 12-26',
           barsPeriod=dict(type='Minute',value=5),inputs=dict(Fast=10,Slow=25),tickReplay=False,fillResolution='Standard',
-          includeCommission=False,includeTradeHistory=True,slippageTicks=2))
+          includeCommission=False,includeTradeHistory=True,slippageTicks=2,**{'from':'2026-09-28','to':'2026-09-29'}))
         self.q=Queue(self.root/'q',self.root/'telemetry');self.b=Fake();self.w=Worker(self.q,self.b)
     def tearDown(self):self.tmp.cleanup()
     def start(self):

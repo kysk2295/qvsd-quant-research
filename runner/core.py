@@ -162,6 +162,9 @@ class Queue:
                       status=row['status'],phase=row['phase'],progress=row['progress'],reason=row['reason'],
                       metrics=result.get('metrics',{}),equity=result.get('equity',[]),
                       evidence=spec.get('evidence','')+' '+result.get('evidence',''))
+        if spec['engine']=='nt':
+            # Request is authoritative even when a diagnostic was copied from another manifest case.
+            snapshot['params'].update(from_date=spec['request']['from'],to_date=spec['request']['to'])
         if row['started']: snapshot['started_at']=row['started']
         if row['status'] in TERMINAL: snapshot['completed_at']=row['updated']
         try:
