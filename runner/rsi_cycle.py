@@ -106,7 +106,7 @@ class RsiCycle:
             native_bars_from=doc.get('barsFrom'),native_bars_to=doc.get('barsTo'),warnings=doc.get('warnings'),
             complete_eth_indicator_history_verified=bool(coverage_report) if self.requires_eth else None,
             coverage_evidence=self.coverage_report_name,
-            note='RTH coverage does not verify full ETH indicator history. Warmup days are not fully entry-eligible sessions.' if self.requires_eth else 'ETH indicator history not required: same-session RTH channel only.')
+            note=('Observed scheduled ETH intervals and required indicator context verified; interval presence does not establish lossless tick completeness.' if coverage_report else 'RTH coverage does not verify full ETH indicator history. Warmup days are not fully entry-eligible sessions.') if self.requires_eth else 'ETH indicator history not required: same-session RTH channel only.')
         for date in dates:review['ledger_evidence']['daily_net'].setdefault(date,0)
         review['next_action']='Review frozen hypothesis; positive/zero samples need broader session evidence; never tune against recent results'
         if warmup_dates:
