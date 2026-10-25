@@ -1,11 +1,23 @@
 import json,tempfile,unittest
 from pathlib import Path
-from runner.assessment import assess,ledger_evidence
+from runner.assessment import assess,ledger_evidence,additional_slippage_evidence
 from runner.research_protocol import validate_manifest,enqueue_extension
 from runner.cafe_extension import reject_previous_request
 from runner.core import file_hash
+from research.audit_eth_history import scheduled
+from datetime import datetime
+from zoneinfo import ZoneInfo
 
 class ResearchProtocolTests(unittest.TestCase):
+    def test_extra_fill_friction_is_separate_and_does_not_mutate_native_ledger(self):
+        trades=[dict(pnl=100,qty=2,exitTime='2026-10-16T23:00:00')]
+        result=additional_slippage_evidence(trades,5,4)
+        self.assertEqual(result['net'],10) #100 minus10fees minus80 additional entry/exit cost
+        self.assertEqual(trades[0]['pnl'],100)
+    def test_eth_weekend_and_maintenance_are_not_missing_trading_intervals(self):
+        ny=ZoneInfo('America/New_York')
+        for stamp,expected in [('2026-10-09T16:55',True),('2026-10-09T17:00',False),('2026-10-11T17:55',False),('2026-10-11T18:00',True),('2026-10-12T17:00',False),('2026-10-12T18:00',True)]:
+            self.assertEqual(scheduled(datetime.fromisoformat(stamp).replace(tzinfo=ny)),expected)
     def test_positive_small_sample_and_concentration(self):
         trades=[dict(pnl=110,qty=1,exitTime='2026-10-16T23:00:00'),dict(pnl=-20,qty=1,exitTime='2026-10-16T23:30:00')]
         self.assertEqual(assess(trades,5,30)['decision'],'deferred')

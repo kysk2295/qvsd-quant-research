@@ -2,6 +2,14 @@
 from datetime import datetime
 from zoneinfo import ZoneInfo
 
+def additional_slippage_evidence(trades,fee,ticks_per_fill):
+    """Arithmetic sensitivity beyond observed native fills, not a new execution simulation."""
+    adjusted=[dict(t,pnl=t['pnl']-2*5*ticks_per_fill*t['qty']) for t in trades]
+    pnl=[t['pnl']-fee*t['qty'] for t in adjusted]
+    return dict(additional_ticks_per_fill=ticks_per_fill,nq_tick_value=5,assumed_fills_per_roundtrip=2,
+                net=sum(pnl),ledger_evidence=ledger_evidence(adjusted,fee),
+                basis='Additional adverse cost beyond native observed fills; arithmetic sensitivity only, no changed orders or fills; not an estimate of actual live slippage')
+
 def ledger_evidence(trades,fee):
     pnl=[t['pnl']-fee*t['qty'] for t in trades]
     ranked=sorted((p for p in pnl if p>0),reverse=True)
