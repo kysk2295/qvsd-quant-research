@@ -3,6 +3,7 @@ from pathlib import Path
 from runner.assessment import assess,ledger_evidence
 from runner.research_protocol import validate_manifest,enqueue_extension
 from runner.cafe_extension import reject_previous_request
+from runner.core import file_hash
 
 class ResearchProtocolTests(unittest.TestCase):
     def test_positive_small_sample_and_concentration(self):
@@ -31,5 +32,16 @@ class ResearchProtocolTests(unittest.TestCase):
             (folder/'old-hash.json').write_text(json.dumps({'request':request,'state':'submitting','manifest_hash':'old'}))
             with self.assertRaises(RuntimeError):reject_previous_request(folder,request)
             reject_previous_request(folder,{'inputs':{'FirstDate':20261015,'Variant':2}})
+    def test_documented_data_repair_preserves_lineage_without_allowing_plain_repeat(self):
+        with tempfile.TemporaryDirectory() as d:
+            root=Path(d);folder=root/'runs';folder.mkdir();evidence=root/'audit.txt';evidence.write_text('missing ticks repaired, re-audited')
+            request={'date':'2026-10-16'}
+            old={'key':'prior','request':request,'state':'terminal','ack':True,'data_hash':'bad-data','source_hash':'same-code'}
+            (folder/'prior.json').write_text(json.dumps(old))
+            correction={'reason':'verified missing ticks repaired','previous_runs':{'prior':'bad-data'},'new_data_hash':'repaired-data','evidence_path':str(evidence),'evidence_sha256':file_hash(evidence)}
+            self.assertEqual(reject_previous_request(folder,request,correction,'repaired-data','same-code'),['prior'])
+            with self.assertRaises(RuntimeError):reject_previous_request(folder,request,correction,'bad-data','same-code')
+            with self.assertRaises(RuntimeError):reject_previous_request(folder,request,correction,'repaired-data','retuned-code')
+            self.assertEqual(json.loads((folder/'prior.json').read_text()),old)
 
 if __name__=='__main__':unittest.main()

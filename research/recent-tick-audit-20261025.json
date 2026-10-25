@@ -1,5 +1,47 @@
 [
   {
+    "file": "data\\runner\\nt-import\\20261012\\NQ DEC26.Last.txt",
+    "sha256": "977cd6c50cc3be7535c4e785c68514abbe94ca7a50b8a6a012f3ed98876580cb",
+    "ticks": 434499,
+    "volume": 465010,
+    "sessions": [
+      {
+        "date": "2026-10-12",
+        "minutes": 390,
+        "rthVolume": 308621,
+        "missingMinutes": []
+      }
+    ]
+  },
+  {
+    "file": "data\\runner\\nt-import\\20261013\\NQ DEC26.Last.txt",
+    "sha256": "86d1c610b89bbc59f9a015e347c63124850026f1bc5fe2f43661e747b752a205",
+    "ticks": 462251,
+    "volume": 502456,
+    "sessions": [
+      {
+        "date": "2026-10-13",
+        "minutes": 390,
+        "rthVolume": 360161,
+        "missingMinutes": []
+      }
+    ]
+  },
+  {
+    "file": "data\\runner\\nt-import\\20261014\\NQ DEC26.Last.txt",
+    "sha256": "6406f4eb26e29c2c4b632f97b5cca66497a1ed9222957a0959f19dec08e15d35",
+    "ticks": 719704,
+    "volume": 777792,
+    "sessions": [
+      {
+        "date": "2026-10-14",
+        "minutes": 390,
+        "rthVolume": 542053,
+        "missingMinutes": []
+      }
+    ]
+  },
+  {
     "file": "data\\runner\\nt-import\\20261015\\NQ DEC26.Last.txt",
     "sha256": "375a264f832ecebd7cac05108bfb08dd6088bdb1a2bfb1188be0466d2c2e9f57",
     "ticks": 714544,

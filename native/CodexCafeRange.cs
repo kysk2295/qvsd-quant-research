@@ -22,6 +22,8 @@ namespace NinjaTrader.NinjaScript.Strategies
         private double prevClose,hi,lo,pv,vol,dayStartProfit;
         private bool initialized,gap,pending,reported;
         private int count,entries,armed,armedBar;
+        private readonly Dictionary<string,int> reasons=new Dictionary<string,int>();
+        private void Note(string reason){if(!reasons.ContainsKey(reason)) reasons[reason]=0;reasons[reason]++;}
         protected override void OnStateChange()
         {
             if(State==State.SetDefaults)
@@ -51,6 +53,7 @@ namespace NinjaTrader.NinjaScript.Strategies
             if(start.Date!=day)
             {
                 day=start.Date; count=entries=armed=0; hi=double.MinValue;lo=double.MaxValue;
+                reasons.Clear();
                 pv=vol=0;gap=pending=reported=false;previous=DateTime.MinValue;vwaps.Clear();
                 dayStartProfit=SystemPerformance.AllTrades.TradesPerformance.Currency.CumProfit;
             }
@@ -62,17 +65,22 @@ namespace NinjaTrader.NinjaScript.Strategies
             previous=start; count++;
             pv+=(h+l+c)/3*Volume[0];vol+=Volume[0];double vwap=vol>0 ? pv/vol:c; vwaps.Add(vwap);
             int n=(Variant==3 ? 60:RangeMinutes)/5;
-            if(count<=n){hi=Math.Max(hi,h);lo=Math.Min(lo,l);return;}
+            if(count<=n){Note("range_build");hi=Math.Max(hi,h);lo=Math.Min(lo,l);return;}
             // Submit at 15:55. Historical execution occurs on the next bar; NT stamps its end.
             if(end.TimeOfDay>=new TimeSpan(15,55,0))
             {
                 if(Position.MarketPosition==MarketPosition.Long) ExitLong("TimeExit","L");
                 if(Position.MarketPosition==MarketPosition.Short) ExitShort("TimeExit","S");
-                if(!reported){Print("AUDIT "+date+" bars="+count+" gap="+gap+" entries="+entries);reported=true;}
+                if(!reported){Print("AUDIT "+date+" bars="+count+" gap="+gap+" entries="+entries);Print("COUNTS "+date+" "+string.Join(" ",reasons.OrderBy(x=>x.Key).Select(x=>x.Key+"="+x.Value)));reported=true;}
                 return;
             }
-            if(gap || pending || Position.MarketPosition!=MarketPosition.Flat || tr.Count<14 || m>=895 || entries>=4) return;
-            if(SystemPerformance.AllTrades.TradesPerformance.Currency.CumProfit-dayStartProfit<=-900) return;
+            if(gap){Note("session_gap");return;}
+            if(pending){Note("order_pending");return;}
+            if(Position.MarketPosition!=MarketPosition.Flat){Note("in_position");return;}
+            if(tr.Count<14){Note("atr_warmup");return;}
+            if(m>=895){Note("entry_time_cutoff");return;}
+            if(entries>=4){Note("entry_limit");return;}
+            if(SystemPerformance.AllTrades.TradesPerformance.Currency.CumProfit-dayStartProfit<=-900){Note("daily_loss_limit");return;}
             double atr=tr.Average(), buffer=Math.Max(TickSize,.05*atr),mid=(hi+lo)/2,stop=0,target=0;
             bool lf=c>vwap && vwaps.Count>=4 && vwap>vwaps[vwaps.Count-4];
             bool sf=c<vwap && vwaps.Count>=4 && vwap<vwaps[vwaps.Count-4];
@@ -102,15 +110,17 @@ namespace NinjaTrader.NinjaScript.Strategies
                 if(h>hi+buffer && c>mid && c<hi){side=-1;stop=h+buffer;target=mid;}
                 else if(l<lo-buffer && c>lo && c<mid){side=1;stop=l-buffer;target=mid;}
             }
-            if(side==0) return;
+            if(side==0){Note("no_qualified_pattern");return;}
+            Note("qualified_pattern");
             stop=(side==1 ? Math.Floor(stop/TickSize):Math.Ceiling(stop/TickSize))*TickSize;
             double distance=side*(c-stop);
             // Conservative pre-submission estimate, fixed across cost cases; gaps can exceed budget.
             double risk=(distance+2.0)*20+10;
-            if(distance<2*TickSize || risk>300){Print("SIZE_REJECT "+date+" risk="+risk);return;}
+            if(distance<2*TickSize || risk>300){Note(distance<2*TickSize ? "stop_too_close":"risk_cap");Print("SIZE_REJECT "+date+" risk="+risk);return;}
             if(Variant!=3) target=c+side*2*distance;
             target=Instrument.MasterInstrument.RoundToTickSize(target);
-            if(side*(target-c)<distance) return;
+            if(side*(target-c)<distance){Note("reward_risk_filter");return;}
+            Note("entry_submitted");
             string signal=side==1 ? "L":"S";
             SetStopLoss(signal,CalculationMode.Price,stop,false);
             SetProfitTarget(signal,CalculationMode.Price,target);

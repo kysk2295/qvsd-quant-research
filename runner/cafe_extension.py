@@ -10,11 +10,23 @@ from dashboard.reporter import post,emit
 from dashboard.server import validate_run
 from .research_lifecycle import Lifecycle
 
-def reject_previous_request(folder,request):
-    for oldpath in folder.glob('*.json'):
-        old=json.loads(oldpath.read_text())
+def reject_previous_request(folder,request,correction=None,new_data_hash=None,source_hash=None):
+    return check_prior_records((json.loads(p.read_text()) for p in folder.glob('*.json')),request,correction,new_data_hash,source_hash)
+
+def check_prior_records(records,request,correction=None,new_data_hash=None,source_hash=None):
+    lineage=[]
+    for old in records:
         if old.get('request')==request:
-            raise RuntimeError('Same date/configuration already attempted under a different fingerprint; inspect evidence, do not resubmit')
+            if not correction:raise RuntimeError('Same date/configuration already attempted; explicit quality-correction evidence required')
+            evidence=Path(correction.get('evidence_path',''))
+            approved=(old.get('state')=='terminal' and old.get('ack') is True and
+                old.get('source_hash')==source_hash and old.get('data_hash')!=new_data_hash and
+                correction.get('new_data_hash')==new_data_hash and bool(correction.get('reason')) and
+                correction.get('previous_runs',{}).get(old.get('key'))==old.get('data_hash') and
+                evidence.is_file() and file_hash(evidence)==correction.get('evidence_sha256'))
+            if not approved:raise RuntimeError('Quality correction does not match prior terminal run, changed data and unchanged strategy evidence')
+            lineage.append(old['key'])
+    return lineage
 
 def execute(manifest_path,lifecycle):
     folder=ROOT/'data/runner/cafe-extension';folder.mkdir(exist_ok=True)
@@ -59,12 +71,12 @@ def execute(manifest_path,lifecycle):
                     record=json.loads(path.read_text())
                     if not record.get('ack'):raise RuntimeError('Existing unacknowledged run: inspect before resuming')
                     results.append(record);continue
-                reject_previous_request(folder,request)
+                lineage=reject_previous_request(folder,request,manifest.get('quality_correction'),dh,source_hash)
                 health=bridge.call('GET','/health')
                 assert not health.get('anyLive') and not health.get('anyNonSim') and not health.get('standingModal')
                 assert not any(j['state'] in ('running','queued') for j in bridge.call('GET','/backtests'))
                 if q.control('mode')=='stopped':raise RuntimeError('User stop')
-                record=dict(key=key,request=request,manifest_hash=mh,data_hash=dh,source_hash=source_hash,state='submitting',started=time.time())
+                record=dict(key=key,request=request,manifest_hash=mh,data_hash=dh,source_hash=source_hash,state='submitting',started=time.time(),supersedes=lineage,quality_correction=manifest.get('quality_correction'))
                 atomic(path,record)
                 lifecycle.update('running','Native Cafe extension '+date,current_run='cafe-extension-'+key[:24])
                 record['native_id']=bridge.call('POST','/backtest',request)['id'];atomic(path,record)
@@ -94,12 +106,21 @@ def execute(manifest_path,lifecycle):
                 review['reason']='One additional historical session; diagnostic only; session coverage remains insufficient' if doc['trades'] and review['net_after_assumed_fee']>0 else review['reason']
                 review.pop('minimum_trades',None)
                 review.update(coverage_policy=manifest['coverage_policy'],ledger_evidence=ledger_evidence(doc['trades'],fee),next_action='Acquire distinct sessions and evaluate frozen parameters; no promotion from this one-day extension')
+                counters={}
+                for line in doc['output']:
+                    if line.startswith('COUNTS '+date+' '):
+                        counters.update({k:int(v) for k,v in (piece.split('=') for piece in line.split()[2:])})
+                review['condition_counts']=counters
+                assert counters,'Diagnostic strategy revision not observed'
+                assert sum(v for k,v in counters.items() if k!='qualified_pattern')==76,'Counter partition differs from pre-15:55 bar count'
+                assert counters.get('qualified_pattern',0)==sum(counters.get(k,0) for k in ('risk_cap','stop_too_close','reward_risk_filter','entry_submitted')),'Pattern outcomes do not reconcile'
+                review['condition_count_note']='Observed native counters before 15:55 audit; qualified_pattern overlaps its risk/reward/entry outcomes. no_qualified_pattern includes trend/pattern filters.'
                 review['ledger_evidence']['daily_net'].setdefault(iso,0)
                 enqueue_extension(ROOT/'research/evidence-work-queue.json',str(variant)+'-'+str(minutes),review,mh)
                 run=dict(id='cafe-extension-'+key[:24],strategy='CodexCafeRange',symbol='NQ',worker='windows-candidate-research',
                     source='Frozen historical extension',batch='cafe-extension-'+date,dataset='NQ DEC26 '+date+' High Tick1',data_hash=dh,
                     status='completed',phase='historical_extension',progress=100,reason=review['reason'],
-                    cost=f'{slip} ticks + ${fee} assumed round trip',params=dict(inputs=request['inputs'],assessment=review,source_hash=source_hash,manifest_hash=mh),
+                    cost=f'{slip} ticks + ${fee} assumed round trip',params=dict(inputs=request['inputs'],assessment=review,source_hash=source_hash,manifest_hash=mh,supersedes=lineage,quality_correction=manifest.get('quality_correction')),
                     metrics=dict(net=review['net_after_assumed_fee'],trades=len(doc['trades'])),equity=[],
                     started_at=record['started'],completed_at=time.time(),evidence=str(report_path.relative_to(ROOT))+'; local complete native ledger')
                 validate_run(run);emit(run,q.telemetry)
