@@ -7,6 +7,7 @@
 NinjaTrader 역사 백테스트는 수행했지만 독립 미사용 기간과 실제 전략 체결 검증은 미완료입니다. 최근 시장 상태에서 만든 두 가설도 등록한 일관성 기준을 충족하지 못했습니다.
 
 - [Goal의 완료 기준과 다음 단계](docs/nq-validation-goal-2026-10-25.md)
+- [단일 실행·결과 검증 준비](docs/nq-prospective-execution-preparation-2026-10-25.md): 합성 검사 35개 통과, 실제 신규 백테스트 0회. 미래 실행 전후의 증거를 분리했으며 생산 연결·전략 검증은 미완료입니다.
 - [최근 시장 상태](docs/nq-market-state-baseline-2026-10-25.md) / [두 예측 가설의 결과](docs/nq-state-response-study-2026-10-25.md)
 - [기존 전략의 확장 지표](docs/extended-metrics-results-2026-10-25.md)
 - [10월 23일 데이터 제외 근거](docs/nrd-oct23-quality-diagnosis-2026-10-25.md)
