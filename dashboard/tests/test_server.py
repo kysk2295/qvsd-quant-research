@@ -24,6 +24,13 @@ class DashboardTests(unittest.TestCase):
         self.assertTrue(self.call('/api/state')['status'].startswith('401'))
         self.assertTrue(self.call('/api/runs','POST',self.run_record())['status'].startswith('401'))
         self.assertTrue(self.call('/api/runs','POST',self.run_record(),token='test-token')['status'].startswith('200'))
+    def test_results_module_is_served_before_app(self):
+        module=self.call('/results.js')
+        self.assertEqual(module['status'],'200 OK')
+        self.assertEqual(module['headers']['Content-Type'],'application/javascript')
+        self.assertIn(b'buildSummaries',module['body'])
+        page=self.call('/',cookie='qvsd_session='+self.server.session_value())['body']
+        self.assertLess(page.index(b'/results.js'),page.index(b'/app.js'))
     def test_pair_once_and_use_worker_token(self):
         response=self.call('/api/pair','POST',{'code':'one-time'})
         token=json.loads(response['body'])['token']

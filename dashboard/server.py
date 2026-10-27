@@ -108,7 +108,7 @@ def application(env, start_response):
         return [data]
     try:
         if path == '/healthz': return response('200 OK', {'ok': True})
-        if path in ('/app.css','/app.js') and method == 'GET':
+        if path in ('/app.css','/app.js','/results.js') and method == 'GET':
             return response('200 OK', (BASE/'static'/path[1:]).read_bytes(), 'text/css' if path.endswith('css') else 'application/javascript')
         if not PASSWORD: return response('503 Service Unavailable', {'error':'Dashboard password is not configured'})
         if method == 'POST':
